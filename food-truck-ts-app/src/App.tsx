@@ -2,13 +2,14 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-const App = () => {
+function App()  {
 
 const ourProject = "We are working on a food truck app"
 
 const handleSubmit = (e: React.ChangeEvent<any>) => {
     console.log("I've been clicked")
     e.preventDefault();
+    }
 
   return (
     <div className="App">
@@ -16,13 +17,13 @@ const handleSubmit = (e: React.ChangeEvent<any>) => {
 
         <div className="Body">
           <form onSubmit={(e) => handleSubmit(e)}>
-            <button className="button"> {/*ONCLICK HERE*/}
-              Tweet
+            <button className="button">
+              button
             </button>
           </form>
         </div>
 
-    </div>
+        </div>
   );
 };
 
