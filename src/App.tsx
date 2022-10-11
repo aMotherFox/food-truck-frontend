@@ -11,6 +11,13 @@ const handleSubmit = (e: React.ChangeEvent<any>) => {
     e.preventDefault();
     }
 
+    const getData = async () => {
+    const response = await fetch("http://localhost:8080/helloWorld");
+    const  result = await response;
+    console.log(result);
+    }
+    getData();
+
   return (
     <div className="App">
       {ourProject}
