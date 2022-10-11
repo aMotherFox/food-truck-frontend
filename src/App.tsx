@@ -11,12 +11,30 @@ const handleSubmit = (e: React.ChangeEvent<any>) => {
     e.preventDefault();
     }
 
-    const getData = async () => {
-    const response = await fetch("http://localhost:8080/helloWorld");
-    const  result = await response;
-    console.log(result);
-    }
-    getData();
+    useEffect(() => {
+    },[]);
+
+//     const getData = async () => {
+//     const response = await fetch("http://localhost:8080/helloWorld"); // ISSUE HERE
+//     const  result = await response;
+//     console.log(result);
+//     }
+    getData(); //ISSUE HERE
+    //Cross-Origin Resource Sharing (CORS)
+    //tried moesif CORS extension
+    //npm install cors --save
+    //@CrossOrigin on controller but backend doesn't need anything else?
+
+    //CORS proxy?
+    //Property 'Use' does not exist on type '() => Element'
+//     const cors = require("cors");
+//     const corsOptions = {
+//        origin:'*',
+//        credentials:true,            //access-control-allow-credentials:true
+//        optionSuccessStatus:200,
+//     }
+//
+//     App.Use(cors(corsOptions)) // Use this after the variable declaration
 
   return (
     <div className="App">
