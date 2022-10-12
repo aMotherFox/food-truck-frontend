@@ -1,54 +1,41 @@
-import React from 'react';
+import React, {useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
+import axios from "axios";
 
 function App()  {
 
-const ourProject = "We are working on a food truck app"
+    const [finalResult, setFinalResult] = useState({message: "intial message"})
 
-const handleSubmit = (e: React.ChangeEvent<any>) => {
-    console.log("I've been clicked")
-    e.preventDefault();
+    console.log("finalResult", finalResult)
+
+    const handleSubmit = () => {
+        console.log("we are in the handleSubmit")
+
+         axios.get("http://localhost:8080/helloWorld")
+            .then((response) => {
+                console.log("response: ", response)
+                setFinalResult(response.data)
+            })
     }
 
-    useEffect(() => {
-    },[]);
-
-//     const getData = async () => {
-//     const response = await fetch("http://localhost:8080/helloWorld"); // ISSUE HERE
-//     const  result = await response;
-//     console.log(result);
-//     }
-    getData(); //ISSUE HERE
-    //Cross-Origin Resource Sharing (CORS)
-    //tried moesif CORS extension
-    //npm install cors --save
-    //@CrossOrigin on controller but backend doesn't need anything else?
-
-    //CORS proxy?
-    //Property 'Use' does not exist on type '() => Element'
-//     const cors = require("cors");
-//     const corsOptions = {
-//        origin:'*',
-//        credentials:true,            //access-control-allow-credentials:true
-//        optionSuccessStatus:200,
-//     }
-//
-//     App.Use(cors(corsOptions)) // Use this after the variable declaration
 
   return (
     <div className="App">
-      {ourProject}
+        <p>We are working on a food truck app</p>
 
         <div className="Body">
-          <form onSubmit={(e) => handleSubmit(e)}>
-            <button className="button">
-              button
+            <button className="button" onClick={handleSubmit}>
+                button
             </button>
-          </form>
         </div>
 
+        <div>
+           <p> Response Body from API </p>
+            {finalResult.message}
         </div>
+
+    </div>
   );
 };
 
