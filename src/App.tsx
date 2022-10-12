@@ -1,29 +1,37 @@
-import React from 'react';
+import React, {useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
+import axios from "axios";
 
 function App()  {
 
-const ourProject = "We are working on a food truck app"
+    const [finalResult, setFinalResult] = useState({message: "intial message"})
 
-const handleSubmit = (e: React.ChangeEvent<any>) => {
-    console.log("I've been clicked")
-    e.preventDefault();
+    const handleSubmit = () => {
+
+         axios.get("http://localhost:8080/helloWorld")
+            .then((response) => {
+                setFinalResult(response.data)
+            })
     }
+
 
   return (
     <div className="App">
-      {ourProject}
+        <p>We are working on a food truck app</p>
 
         <div className="Body">
-          <form onSubmit={(e) => handleSubmit(e)}>
-            <button className="button">
-              button
+            <button className="button" onClick={handleSubmit}>
+                Press to say Hello to the World
             </button>
-          </form>
         </div>
 
+        <div>
+           <p> Response Body from API: </p>
+            {finalResult.message}
         </div>
+
+    </div>
   );
 };
 
