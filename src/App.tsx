@@ -7,14 +7,10 @@ function App()  {
 
     const [finalResult, setFinalResult] = useState({message: "intial message"})
 
-    console.log("finalResult", finalResult)
-
     const handleSubmit = () => {
-        console.log("we are in the handleSubmit")
 
          axios.get("http://localhost:8080/helloWorld")
             .then((response) => {
-                console.log("response: ", response)
                 setFinalResult(response.data)
             })
     }
@@ -26,12 +22,12 @@ function App()  {
 
         <div className="Body">
             <button className="button" onClick={handleSubmit}>
-                button
+                Press to say Hello to the World
             </button>
         </div>
 
         <div>
-           <p> Response Body from API </p>
+           <p> Response Body from API: </p>
             {finalResult.message}
         </div>
 
