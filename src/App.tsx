@@ -1,36 +1,22 @@
-import React, {useState} from 'react';
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
-import axios from "axios";
-
-function App()  {
-
-    const [finalResult, setFinalResult] = useState({message: "intial message"})
-
-    const handleSubmit = () => {
-
-         axios.get("http://localhost:8080/helloWorld")
-            .then((response) => {
-                setFinalResult(response.data)
-            })
-    }
+import { BrowserRouter, Route, Routes} from "react-router-dom";
+import Home from './Home';
+import  NavBar from "./NavBar";
+import Entrees from './Entrees';
+import Appetizers from './Appetizers';
 
 
+const App = () => {
   return (
     <div className="App">
-        <p>We are working on a food truck app</p>
-
-        <div className="Body">
-            <button className="button" onClick={handleSubmit}>
-                Press to say Hello to the World
-            </button>
-        </div>
-
-        <div>
-           <p> Response Body from API: </p>
-            {finalResult.message}
-        </div>
-
+        <NavBar />
+        <Routes>
+            <Route path="/" element={<Home/>}/>
+            <Route path="/entrees" element={<Entrees/>}/>
+            <Route path="/appetizers" element={<Appetizers/>}/>
+        </Routes>
+        <p>Working on the Navbar! </p>
     </div>
   );
 };
