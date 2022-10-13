@@ -1,11 +1,11 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import axios from "axios";
-import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import { BrowserRouter, Route, Routes} from "react-router-dom";
 import Home from './Home';
 import Layout from './Layout';
-import { useRoutes} from 'react-router-dom';
+import  NavBar from "./NavBar";
+
 
 const App = () => {
 
@@ -14,9 +14,14 @@ const App = () => {
   return (
     <div className="App">
         <p>Working on the Navbar! </p>
-          <div>
-             <Home/>
-          </div>
+           <BrowserRouter>
+                <NavBar />
+                    <Routes>
+                        <Route path="/" element={<Home/>}/>
+
+                    </Routes>
+           </BrowserRouter>
+
     </div>
   );
 };
