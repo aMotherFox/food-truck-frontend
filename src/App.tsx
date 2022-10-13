@@ -15,10 +15,10 @@ const App = () => {
                 <Routes>
                     <Route path="/" element={<Home/>}/>
                     <Route path="/entrees" element={<Entrees/>}/>
-                     <Route path="/appetizers" element={<Appetizers/>}/>
+                    <Route path="/appetizers" element={<Appetizers/>}/>
                 </Routes>
        </BrowserRouter>
-        <p>Working on the Navbar! </p>
+       <p>Working on the Navbar! </p>
     </div>
   );
 };
