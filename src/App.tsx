@@ -2,8 +2,8 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import axios from "axios";
-import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
-
+import { BrowserRouter as Router, Route} from "react-router-dom";
+import Home from './Home'
 
 const App = () => {
 
@@ -13,7 +13,7 @@ const App = () => {
     <div className="App">
         <p>Working on the Navbar! </p>
           <div>
-              navbar
+             <Home/>
           </div>
     </div>
   );
