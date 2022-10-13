@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes} from "react-router-dom";
 import Home from './Home';
 import Layout from './Layout';
 import  NavBar from "./NavBar";
+import Entrees from './Entrees';
 
 
 const App = () => {
@@ -13,15 +14,16 @@ const App = () => {
 
   return (
     <div className="App">
+       <BrowserRouter>
+            <NavBar />
+                <Routes>
+                    <Route path="/" element={<Home/>}/>
+                </Routes>
+                <Routes>
+                    <Route path="/Entrees" element={<Entrees/>}/>
+                </Routes>
+       </BrowserRouter>
         <p>Working on the Navbar! </p>
-           <BrowserRouter>
-                <NavBar />
-                    <Routes>
-                        <Route path="/" element={<Home/>}/>
-
-                    </Routes>
-           </BrowserRouter>
-
     </div>
   );
 };
