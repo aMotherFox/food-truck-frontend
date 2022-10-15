@@ -25,5 +25,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
-      - name: Lint
+      - name: Installing Dependencies
+        run: yarn install
+      - name: Lintting Project
         run: yarn lint
