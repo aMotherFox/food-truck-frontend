@@ -1,38 +1,32 @@
-import React, {useState} from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
-import axios from "axios";
+import axios from 'axios';
 
-function HelloWorld()  {
+function HelloWorld() {
+	const [finalResult, setFinalResult] = useState({ message: 'intial message' });
 
-    const [finalResult, setFinalResult] = useState({message: "intial message"})
+	const handleSubmit = () => {
+		axios.get('http://localhost:8080/helloWorld').then(response => {
+			setFinalResult(response.data);
+		});
+	};
 
-    const handleSubmit = () => {
+	return (
+		<div className="App">
+			<p>We are working on a food truck app</p>
 
-         axios.get("http://localhost:8080/helloWorld")
-            .then((response) => {
-                setFinalResult(response.data)
-            })
-    }
+			<div className="Body">
+				<button className="button" type="submit" onClick={handleSubmit}>
+					Press to say Hello to the World
+				</button>
+			</div>
 
-
-  return (
-    <div className="App">
-        <p>We are working on a food truck app</p>
-
-        <div className="Body">
-            <button className="button" onClick={handleSubmit}>
-                Press to say Hello to the World
-            </button>
-        </div>
-
-        <div>
-           <p> Response Body from API: </p>
-            {finalResult.message}
-        </div>
-
-    </div>
-  );
-};
+			<div>
+				<p> Response Body from API: </p>
+				{finalResult.message}
+			</div>
+		</div>
+	);
+}
 
 export default HelloWorld;
