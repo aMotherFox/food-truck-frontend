@@ -6,18 +6,16 @@ import NavBar from './NavBar';
 import Entrees from './Entrees';
 import Appetizers from './Appetizers';
 
-function App() {
-	return (
-		<div className="App">
-			<NavBar />
-			<Routes>
-				<Route path="/" element={<Home />} />
-				<Route path="/entrees" element={<Entrees />} />
-				<Route path="/appetizers" element={<Appetizers />} />
-			</Routes>
-			<p>Working on the Navbar! </p>
-		</div>
-	);
-}
+const App = () => (
+	<div className="App">
+		<NavBar />
+		<Routes>
+			<Route path="/" element={<Home />} />
+			<Route path="/entrees" element={<Entrees />} />
+			<Route path="/appetizers" element={<Appetizers />} />
+		</Routes>
+		<p>Working on the Navbar! </p>
+	</div>
+);
 
 export default App;

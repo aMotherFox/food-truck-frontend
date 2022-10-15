@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import axios from 'axios';
 
-function HelloWorld() {
+const HelloWorld = () => {
 	const [finalResult, setFinalResult] = useState({ message: 'intial message' });
 
 	const handleSubmit = () => {
@@ -27,6 +27,6 @@ function HelloWorld() {
 			</div>
 		</div>
 	);
-}
+};
 
 export default HelloWorld;
