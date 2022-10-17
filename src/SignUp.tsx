@@ -11,29 +11,29 @@ const SignUp = () => {
 				<div className="form-body">
 					<div>
 						<label>First Name </label>
-						<input type={'text'} placeholder="First Name"></input>
+						<input type="text" placeholder="First Name" />
 					</div>
 					<div>
 						<label>Last Name </label>
-						<input type={'text'} placeholder="LastName"></input>
+						<input type="text" placeholder="LastName" />
 					</div>
 					<div>
 						<label>Email </label>
-						<input type={'email'} placeholder="Email"></input>
+						<input type="email" placeholder="Email" />
 					</div>
 					<div>
 						<label>Password </label>
-						<input type={'password'} placeholder="Password" />
+						<input type="password" placeholder="Password" />
 					</div>
 					<div>
 						<label>Confirm Password </label>
-						<input type={'password'} placeholder="Confirm Password" />
+						<input type="password" placeholder="Confirm Password" />
 					</div>
 				</div>
 				<div>
 					<button
 						className="submit-button"
-						type={'submit'}
+						type="submit"
 						onClick={handleSubmit}
 					>
 						Submit
