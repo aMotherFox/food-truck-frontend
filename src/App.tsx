@@ -5,6 +5,7 @@ import Home from './Home';
 import NavBar from './NavBar';
 import Entrees from './Entrees';
 import Appetizers from './Appetizers';
+import SignUp from './SignUp';
 
 const App = () => (
 	<div className="App">
@@ -13,6 +14,7 @@ const App = () => (
 			<Route path="/" element={<Home />} />
 			<Route path="/entrees" element={<Entrees />} />
 			<Route path="/appetizers" element={<Appetizers />} />
+			<Route path="/signUp" element={<SignUp />} />
 		</Routes>
 		<p>Working on the Navbar! </p>
 	</div>
