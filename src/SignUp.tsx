@@ -7,27 +7,47 @@ const SignUp = () => {
 	return (
 		<div>
 			<h1> This is the SignUp Page </h1>
-			<form className="form">
+			<form className="form" id="form">
 				<div className="form-body">
 					<div>
-						<label>First Name </label>
-						<input type="text" placeholder="First Name" />
+						<label htmlFor="first-name">
+							First Name
+							<input
+								id="first-name"
+								type="text"
+								placeholder="First Name"
+								required
+							/>
+						</label>
 					</div>
 					<div>
-						<label>Last Name </label>
-						<input type="text" placeholder="LastName" />
+						<label htmlFor="last-name">
+							Last Name
+							<input
+								id="last-name"
+								type="text"
+								placeholder="LastName"
+								required
+							/>
+						</label>
 					</div>
 					<div>
-						<label>Email </label>
-						<input type="email" placeholder="Email" />
+						<label htmlFor="email">
+							Email
+							<input type="email" placeholder="Email" required />
+						</label>
 					</div>
 					<div>
-						<label>Password </label>
-						<input type="password" placeholder="Password" />
+						<label htmlFor="password">
+							Password
+							<input type="password" placeholder="Password" required />
+						</label>
 					</div>
 					<div>
-						<label>Confirm Password </label>
-						<input type="password" placeholder="Confirm Password" />
+						<label htmlFor="confirmation-password">
+							Confirm Password
+							<input type="password" placeholder="Confirm Password" required />
+						</label>
 					</div>
 				</div>
 				<div>
