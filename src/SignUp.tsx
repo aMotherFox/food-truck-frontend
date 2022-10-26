@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 /*
 confirm Password need to match password.
@@ -11,6 +12,9 @@ the password is wrong. But if is right the sign up will be complete and give him
 */
 const SignUp = () => {
 	const [values, setValues] = useState({
+		firstName: '',
+		lastName: '',
+		email: '',
 		password: '',
 		confirmPassword: '',
 	});
@@ -21,12 +25,21 @@ const SignUp = () => {
 			...values,
 			[name]: value,
 		});
+		// console.log(values);
 	};
-	const handleSubmit = () => {
+	const handleSubmit = (e: any) => {
+		e.preventDefault();
 		if (values.password !== values.confirmPassword) {
 			alert('Password and Confirm Password does NOT match');
 		}
-		console.log(' submitted! ');
+		axios
+			.post('http://localhost:8080/customers', values)
+			.then(response => console.log(response, 'submitted'))
+			.catch(error => {
+				if (error.toJSON().message === 'Network Error') {
+					alert('error');
+				}
+			});
 	};
 
 	return (
@@ -38,9 +51,11 @@ const SignUp = () => {
 						<label htmlFor="firstname">
 							First Name
 							<input
-								name="firstname"
+								name="firstName"
 								type="text"
 								placeholder="First Name"
+								onChange={handleChange}
+								value={values.firstName}
 								required
 							/>
 						</label>
@@ -49,9 +64,11 @@ const SignUp = () => {
 						<label htmlFor="lastname">
 							Last Name
 							<input
-								name="last-name"
+								name="lastName"
 								type="text"
 								placeholder="LastName"
+								value={values.lastName}
+								onChange={handleChange}
 								required
 							/>
 						</label>
@@ -59,7 +76,14 @@ const SignUp = () => {
 					<div>
 						<label htmlFor="email">
 							Email
-							<input name="email" type="email" placeholder="Email" required />
+							<input
+								name="email"
+								type="email"
+								placeholder="Email"
+								onChange={handleChange}
+								value={values.email}
+								required
+							/>
 						</label>
 					</div>
 					<div>
