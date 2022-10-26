@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router';
 /*
 confirm Password need to match password.
 
@@ -11,6 +12,7 @@ the password is wrong. But if is right the sign up will be complete and give him
 
 */
 const SignUp = () => {
+	const navigate = useNavigate();
 	const [values, setValues] = useState({
 		firstName: '',
 		lastName: '',
@@ -31,15 +33,17 @@ const SignUp = () => {
 		e.preventDefault();
 		if (values.password !== values.confirmPassword) {
 			alert('Password and Confirm Password does NOT match');
+		} else {
+			// axios
+			// .post('http://localhost:8080/customers', values)
+			// .then(response => console.log(response, 'submitted'))
+			// .catch(error => {
+			// 	if (error.toJSON().message === 'Network Error') {
+			// 		alert('error');
+			// 	}
+			// });
+			navigate('/login');
 		}
-		axios
-			.post('http://localhost:8080/customers', values)
-			.then(response => console.log(response, 'submitted'))
-			.catch(error => {
-				if (error.toJSON().message === 'Network Error') {
-					alert('error');
-				}
-			});
 	};
 
 	return (
@@ -51,6 +55,7 @@ const SignUp = () => {
 						<label htmlFor="firstname">
 							First Name
 							<input
+								className="form_input"
 								name="firstName"
 								type="text"
 								placeholder="First Name"
@@ -64,6 +69,7 @@ const SignUp = () => {
 						<label htmlFor="lastname">
 							Last Name
 							<input
+								className="form_input"
 								name="lastName"
 								type="text"
 								placeholder="LastName"
@@ -77,6 +83,7 @@ const SignUp = () => {
 						<label htmlFor="email">
 							Email
 							<input
+								className="form_input"
 								name="email"
 								type="email"
 								placeholder="Email"
@@ -90,6 +97,7 @@ const SignUp = () => {
 						<label htmlFor="password">
 							Password
 							<input
+								className="form_input"
 								name="password"
 								type="password"
 								placeholder="Password"
@@ -103,6 +111,7 @@ const SignUp = () => {
 						<label htmlFor="confirmation-password">
 							Confirm Password
 							<input
+								className="form_input"
 								name="confirmPassword"
 								type="password"
 								placeholder="Confirm Password"

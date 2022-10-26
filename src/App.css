@@ -39,3 +39,7 @@
 .form-body * {
 	padding: 5px;
 }
+
+.form_input {
+	margin: 6px;
+}
