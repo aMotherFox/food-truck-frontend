@@ -34,7 +34,7 @@ const SignUp = () => {
 			values.confirmPassword.length < 3 &&
 			values.password.length < 3
 		) {
-			alert('password mus be more then 3 characters');
+			alert('password must be more then 3 characters');
 		} else if (values.password !== values.confirmPassword) {
 			alert('Password and Confirm Password does NOT match');
 		} else if (values.email.includes('@') === false) {
