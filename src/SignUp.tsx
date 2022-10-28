@@ -1,18 +1,10 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
-/*
-confirm Password need to match password.
 
-when the button is clicked, it will call a function that get the present values
-of password & confirmation password. if the values of password & confirmation password does
-NOT MATCH we will send a alert to the user screen to notifiy the user that
-the password is wrong. But if is right the sign up will be complete and give him an alert
- stating that the user can log in by going on /login page
-
-*/
 const SignUp = () => {
 	const navigate = useNavigate();
+	const [errors, setErrors] = useState('');
 	const [values, setValues] = useState({
 		firstName: '',
 		lastName: '',
@@ -27,12 +19,26 @@ const SignUp = () => {
 			...values,
 			[name]: value,
 		});
-		// console.log(values);
 	};
-	const handleSubmit = (e: any) => {
-		e.preventDefault();
-		if (values.password !== values.confirmPassword) {
+
+	const handleValidation = () => {
+		if (
+			values.firstName === '' ||
+			values.lastName === '' ||
+			values.email === '' ||
+			values.password === '' ||
+			values.confirmPassword === ''
+		) {
+			setErrors('some field are incomplete');
+		} else if (
+			values.confirmPassword.length < 3 &&
+			values.password.length < 3
+		) {
+			alert('password mus be more then 3 characters');
+		} else if (values.password !== values.confirmPassword) {
 			alert('Password and Confirm Password does NOT match');
+		} else if (values.email.includes('@') === false) {
+			alert('Email invalid');
 		} else {
 			// axios
 			// .post('http://localhost:8080/customers', values)
@@ -46,6 +52,24 @@ const SignUp = () => {
 		}
 	};
 
+	const handleSubmit = (e: any) => {
+		e.preventDefault();
+		handleValidation();
+		// if (values.password !== values.confirmPassword) {
+		// 	alert('Password and Confirm Password does NOT match');
+		// } else {
+		// 	// axios
+		// 	// .post('http://localhost:8080/customers', values)
+		// 	// .then(response => console.log(response, 'submitted'))
+		// 	// .catch(error => {
+		// 	// 	if (error.toJSON().message === 'Network Error') {
+		// 	// 		alert('error');
+		// 	// 	}
+		// 	// });
+		// 	navigate('/login');
+		// }
+	};
+	console.log(values.email.includes('@'));
 	return (
 		<div>
 			<h1> This is the SignUp Page </h1>
@@ -55,6 +79,7 @@ const SignUp = () => {
 						<label htmlFor="firstname">
 							First Name
 							<input
+								id="firstName"
 								className="form_input"
 								name="firstName"
 								type="text"
@@ -120,6 +145,7 @@ const SignUp = () => {
 								required
 							/>
 						</label>
+						<p style={{ color: 'red' }}>{errors}</p>
 					</div>
 				</div>
 				<div>
