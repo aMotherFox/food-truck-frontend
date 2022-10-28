@@ -55,21 +55,8 @@ const SignUp = () => {
 	const handleSubmit = (e: any) => {
 		e.preventDefault();
 		handleValidation();
-		// if (values.password !== values.confirmPassword) {
-		// 	alert('Password and Confirm Password does NOT match');
-		// } else {
-		// 	// axios
-		// 	// .post('http://localhost:8080/customers', values)
-		// 	// .then(response => console.log(response, 'submitted'))
-		// 	// .catch(error => {
-		// 	// 	if (error.toJSON().message === 'Network Error') {
-		// 	// 		alert('error');
-		// 	// 	}
-		// 	// });
-		// 	navigate('/login');
-		// }
 	};
-	console.log(values.email.includes('@'));
+
 	return (
 		<div>
 			<h1> This is the SignUp Page </h1>
