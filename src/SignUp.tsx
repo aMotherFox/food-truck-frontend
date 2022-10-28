@@ -1,4 +1,4 @@
-import axios from 'axios';
+// import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 
@@ -34,11 +34,14 @@ const SignUp = () => {
 			values.confirmPassword.length < 3 &&
 			values.password.length < 3
 		) {
-			alert('password must be more then 3 characters');
+			setErrors('password must be more then 3 characters');
+			// alert('password must be more then 3 characters');
 		} else if (values.password !== values.confirmPassword) {
-			alert('Password and Confirm Password does NOT match');
+			setErrors('Password and Confirm Password does NOT match');
+			// alert('Password and Confirm Password does NOT match');
 		} else if (values.email.includes('@') === false) {
-			alert('Email invalid');
+			setErrors('Email invalid');
+			// alert('Email invalid');
 		} else {
 			// axios
 			// .post('http://localhost:8080/customers', values)
