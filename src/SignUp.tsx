@@ -23,9 +23,9 @@ const SignUp = () => {
 		navigate('/login');
 	};
 
-	const handleValidation = (e: any) => {
+	const handleValidation = (e: React.FormEvent<HTMLFormElement>) => {
 		console.log('e: ', e);
-		const typedFirstName = e.currentTarget.elements.firstName.value;
+		const typedFirstName = e.target.elements.firstNam.value;
 		const typedLastName = e.target.elements.lastName.value;
 		const typedEmail = e.target.elements.email.value;
 		const typedPassword = e.target.elements.password.value;
@@ -70,7 +70,7 @@ const SignUp = () => {
 		}
 	};
 
-	const handleSubmit = (e: any) => {
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		handleValidation(e);
 	};
