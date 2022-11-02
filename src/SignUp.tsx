@@ -2,6 +2,14 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 
+type FormFieldsType = {
+	firstName: { value: string };
+	lastName: { value: string };
+	email: { value: string };
+	password: { value: string };
+	confirmPassword: { value: string };
+} & EventTarget;
+
 const SignUp = () => {
 	const user = {
 		firstName: '',
@@ -14,22 +22,14 @@ const SignUp = () => {
 	const [error, setError] = useState<string>();
 	const [values, setValues] = useState(user);
 
-	const test = () => {
-		axios.post('http://localhost:8080/customers', values).catch(errors => {
-			if (errors.toJSON().message === 'Network Error') {
-				alert('error');
-			}
-		});
-		navigate('/login');
-	};
-
 	const handleValidation = (e: React.FormEvent<HTMLFormElement>) => {
-		console.log('e: ', e);
-		const typedFirstName = e.target.elements.firstNam.value;
-		const typedLastName = e.target.elements.lastName.value;
-		const typedEmail = e.target.elements.email.value;
-		const typedPassword = e.target.elements.password.value;
-		const typedConfirmPassword = e.target.elements.confirmPassword.value;
+		const target = e.target as FormFieldsType;
+
+		const typedFirstName = target.firstName.value;
+		const typedLastName = target.lastName.value;
+		const typedEmail = target.email.value;
+		const typedPassword = target.password.value;
+		const typedConfirmPassword = target.confirmPassword.value;
 		if (
 			typedFirstName === '' ||
 			typedLastName === '' ||
@@ -59,20 +59,20 @@ const SignUp = () => {
 				password: typedPassword,
 				confirmPassword: typedConfirmPassword,
 			});
-			console.log('after setValues');
-			console.log(typedFirstName);
-			console.log(typedLastName);
-			console.log(typedEmail);
-			console.log(typedEmail);
-			console.log(typedPassword);
-			console.log(typedConfirmPassword);
-			test();
 		}
 	};
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		handleValidation(e);
+		if (!error) {
+			axios.post('http://localhost:8080/customers', values).catch(errors => {
+				if (errors.toJSON().message === 'Network Error') {
+					setError('Error... Something gone wrong');
+				}
+			});
+			navigate('/login');
+		}
 	};
 
 	return (
