@@ -1,13 +1,13 @@
-import React from 'react';
-import './App.css';
-import { Route, Routes } from 'react-router-dom';
-import Home from './Home';
-import NavBar from './NavBar';
-import Entrees from './Entrees';
-import Appetizers from './Appetizers';
-import SignUp from './SignUp';
-import Login from './Login';
-import Profile from './Profile';
+import React from "react";
+import "./App.css";
+import { Route, Routes } from "react-router-dom";
+import Home from "./Home";
+import NavBar from "./NavBar";
+import Entrees from "./Entrees";
+import Appetizers from "./Appetizers";
+import SignUp from "./SignUp";
+import Login from "./Login";
+import Profile from "./Profile";
 
 const App = () => (
 	<div className="App">

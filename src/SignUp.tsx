@@ -1,66 +1,87 @@
-// import axios from 'axios';
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router';
+import axios from "axios";
+import React, { useState } from "react";
+import { useNavigate } from "react-router";
+
+type FormFieldsType = {
+	firstName: { value: string };
+	lastName: { value: string };
+	email: { value: string };
+	password: { value: string };
+	confirmPassword: { value: string };
+} & EventTarget;
 
 const SignUp = () => {
+	const user = {
+		firstName: "",
+		lastName: "",
+		email: "",
+		password: "",
+		confirmPassword: "",
+	};
 	const navigate = useNavigate();
-	const [errors, setErrors] = useState('');
-	const [values, setValues] = useState({
-		firstName: '',
-		lastName: '',
-		email: '',
-		password: '',
-		confirmPassword: '',
-	});
+	const [error, setError] = useState<string>();
+	const [values, setValues] = useState(user);
 
-	const handleChange = (e: { target: { name: any; value: any } }) => {
-		const { name, value } = e.target;
-		setValues({
-			...values,
-			[name]: value,
-		});
-	};
+	const isValid = (e: React.FormEvent<HTMLFormElement>): boolean => {
+		const target = e.target as FormFieldsType;
 
-	const handleValidation = () => {
+		const typedFirstName = target.firstName.value;
+		const typedLastName = target.lastName.value;
+		const typedEmail = target.email.value;
+		const typedPassword = target.password.value;
+		const typedConfirmPassword = target.confirmPassword.value;
 		if (
-			values.firstName === '' ||
-			values.lastName === '' ||
-			values.email === '' ||
-			values.password === '' ||
-			values.confirmPassword === ''
+			typedFirstName === "" ||
+			typedLastName === "" ||
+			typedEmail === "" ||
+			typedEmail.trim() === "" ||
+			typedPassword === "" ||
+			typedPassword.trim() === "" ||
+			typedConfirmPassword === "" ||
+			typedConfirmPassword.trim() === ""
 		) {
-			setErrors('some field are incomplete');
-		} else if (
-			values.confirmPassword.length < 3 &&
-			values.password.length < 3
-		) {
-			setErrors('password must be more then 3 characters');
-		} else if (values.password !== values.confirmPassword) {
-			setErrors('Password and Confirm Password does NOT match');
-		} else if (values.email.includes('@') === false) {
-			setErrors('Email invalid');
+			setError("some field are incomplete");
+		} else if (typedFirstName.trim() === "") {
+			setError("First name cannot be blank");
+		} else if (typedLastName.trim() === "") {
+			setError("Last name cannot be blank");
+		} else if (typedConfirmPassword.length < 8 || typedPassword.length < 8) {
+			setError("password must be more then 8 characters");
+		} else if (typedPassword !== typedConfirmPassword) {
+			setError("Password and Confirm Password does NOT match");
+		} else if (typedEmail.includes("@") === false) {
+			setError("Email invalid");
 		} else {
-			// axios
-			// .post('http://localhost:8080/customers', values)
-			// .then(response => console.log(response, 'submitted'))
-			// .catch(error => {
-			// 	if (error.toJSON().message === 'Network Error') {
-			// 		alert('error');
-			// 	}
-			// });
-			navigate('/login');
+			setValues({
+				firstName: typedFirstName,
+				lastName: typedLastName,
+				email: typedEmail,
+				password: typedPassword,
+				confirmPassword: typedConfirmPassword,
+			});
+
+			return true;
 		}
+
+		return false;
 	};
 
-	const handleSubmit = (e: any) => {
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		handleValidation();
+		if (isValid(e)) {
+			axios.post("http://localhost:8080/customers", values).catch(errors => {
+				if (errors.toJSON().message === "Network Error") {
+					setError("Error... Something gone wrong");
+				}
+			});
+			navigate("/login");
+		}
 	};
 
 	return (
 		<div>
-			<h1> This is the SignUp Page </h1>
-			<form className="form">
+			<h1> This is the Sign-Up Page </h1>
+			<form className="form" onSubmit={handleSubmit}>
 				<div className="form-body">
 					<div>
 						<label htmlFor="firstname">
@@ -71,8 +92,6 @@ const SignUp = () => {
 								name="firstName"
 								type="text"
 								placeholder="First Name"
-								onChange={handleChange}
-								value={values.firstName}
 								required
 							/>
 						</label>
@@ -85,8 +104,6 @@ const SignUp = () => {
 								name="lastName"
 								type="text"
 								placeholder="LastName"
-								value={values.lastName}
-								onChange={handleChange}
 								required
 							/>
 						</label>
@@ -99,8 +116,6 @@ const SignUp = () => {
 								name="email"
 								type="email"
 								placeholder="Email"
-								onChange={handleChange}
-								value={values.email}
 								required
 							/>
 						</label>
@@ -113,8 +128,6 @@ const SignUp = () => {
 								name="password"
 								type="password"
 								placeholder="Password"
-								value={values.password}
-								onChange={handleChange}
 								required
 							/>
 						</label>
@@ -127,20 +140,14 @@ const SignUp = () => {
 								name="confirmPassword"
 								type="password"
 								placeholder="Confirm Password"
-								value={values.confirmPassword}
-								onChange={handleChange}
 								required
 							/>
 						</label>
-						<p style={{ color: 'red' }}>{errors}</p>
+						<p style={{ color: "red" }}>{error}</p>
 					</div>
 				</div>
 				<div>
-					<button
-						className="submit-button"
-						type="submit"
-						onClick={handleSubmit}
-					>
+					<button className="submit-button" type="submit">
 						Submit
 					</button>
 				</div>

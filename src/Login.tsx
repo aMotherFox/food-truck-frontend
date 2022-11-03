@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 // import axios from 'axios';
 
 const Login = () => {
@@ -43,10 +43,10 @@ const Login = () => {
 		// find exact same email in DB or throw 400
 		// find exact same password in DB or throw 400
 		// no access to DB, will hardcode for testing
-		const correctEmail = 'doggedawg@gmail.com';
-		const correctPassword = 'Buck123';
+		const correctEmail = "doggedawg@gmail.com";
+		const correctPassword = "Buck123";
 		if (emailInput !== correctEmail || passwordInput !== correctPassword) {
-			setError('Email or Password is incorrect');
+			setError("Email or Password is incorrect");
 		} else {
 			setLoginStatus({
 				email: true,
@@ -90,7 +90,7 @@ const Login = () => {
 								required
 							/>
 						</label>
-						<p style={{ color: 'red' }}>{error}</p>
+						<p style={{ color: "red" }}>{error}</p>
 					</div>
 				</div>
 				<div>
