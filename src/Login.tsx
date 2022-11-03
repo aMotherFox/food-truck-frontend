@@ -6,9 +6,7 @@ const Login = () => {
 		email: false,
 		password: false,
 	};
-	console.log(login);
 
-	// useState is a hook
 	const [error, setError] = useState<string>();
 	const [loginStatus, setLoginStatus] = useState(login);
 	console.log(loginStatus, setLoginStatus);
@@ -36,10 +34,24 @@ const Login = () => {
 	const handleLogin = (e: any) => {
 		const emailInput = e.target.elements.email.value;
 		const passwordInput = e.target.elements.password.value;
-		console.log(emailInput, passwordInput);
 		// found entered email and password
-		if (emailInput === '' || passwordInput === '') {
-			setError('Please fill out all fields');
+
+		// if (emailInput === '' || passwordInput === '') {
+		// 	setError('Please fill out all fields');
+		// }
+
+		// find exact same email in DB or throw 400
+		// find exact same password in DB or throw 400
+		// no access to DB, will hardcode for testing
+		const correctEmail = 'doggedawg@gmail.com';
+		const correctPassword = 'Buck123';
+		if (emailInput !== correctEmail || passwordInput !== correctPassword) {
+			setError('Email or Password is incorrect');
+		} else {
+			setLoginStatus({
+				email: true,
+				password: true,
+			});
 		}
 	};
 
@@ -78,6 +90,7 @@ const Login = () => {
 								required
 							/>
 						</label>
+						<p style={{ color: 'red' }}>{error}</p>
 					</div>
 				</div>
 				<div>
