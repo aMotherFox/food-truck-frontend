@@ -22,7 +22,7 @@ const SignUp = () => {
 	const [error, setError] = useState<string>();
 	const [values, setValues] = useState(user);
 
-	const handleValidation = (e: React.FormEvent<HTMLFormElement>) => {
+	const isValid = (e: React.FormEvent<HTMLFormElement>): boolean => {
 		const target = e.target as FormFieldsType;
 
 		const typedFirstName = target.firstName.value;
@@ -45,8 +45,8 @@ const SignUp = () => {
 			setError('First name cannot be blank');
 		} else if (typedLastName.trim() === '') {
 			setError('Last name cannot be blank');
-		} else if (typedConfirmPassword.length < 3 && typedPassword.length < 3) {
-			setError('password must be more then 3 characters');
+		} else if (typedConfirmPassword.length < 8 || typedPassword.length < 8) {
+			setError('password must be more then 8 characters');
 		} else if (typedPassword !== typedConfirmPassword) {
 			setError('Password and Confirm Password does NOT match');
 		} else if (typedEmail.includes('@') === false) {
@@ -59,13 +59,16 @@ const SignUp = () => {
 				password: typedPassword,
 				confirmPassword: typedConfirmPassword,
 			});
+
+			return true;
 		}
+
+		return false;
 	};
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		handleValidation(e);
-		if (!error) {
+		if (isValid(e)) {
 			axios.post('http://localhost:8080/customers', values).catch(errors => {
 				if (errors.toJSON().message === 'Network Error') {
 					setError('Error... Something gone wrong');
@@ -77,7 +80,7 @@ const SignUp = () => {
 
 	return (
 		<div>
-			<h1> This is the SignUp Page </h1>
+			<h1> This is the Sign-Up Page </h1>
 			<form className="form" onSubmit={handleSubmit}>
 				<div className="form-body">
 					<div>
