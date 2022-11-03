@@ -34,6 +34,7 @@
 				"unnamedComponents": "arrow-function"
 			}
 		],
-		"no-alert": "error"
+		"no-alert": "error",
+		"quotes": [2, "double"]
 	}
 }

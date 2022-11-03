@@ -1,6 +1,6 @@
-import axios from 'axios';
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router';
+import axios from "axios";
+import React, { useState } from "react";
+import { useNavigate } from "react-router";
 
 type FormFieldsType = {
 	firstName: { value: string };
@@ -12,11 +12,11 @@ type FormFieldsType = {
 
 const SignUp = () => {
 	const user = {
-		firstName: '',
-		lastName: '',
-		email: '',
-		password: '',
-		confirmPassword: '',
+		firstName: "",
+		lastName: "",
+		email: "",
+		password: "",
+		confirmPassword: "",
 	};
 	const navigate = useNavigate();
 	const [error, setError] = useState<string>();
@@ -31,26 +31,26 @@ const SignUp = () => {
 		const typedPassword = target.password.value;
 		const typedConfirmPassword = target.confirmPassword.value;
 		if (
-			typedFirstName === '' ||
-			typedLastName === '' ||
-			typedEmail === '' ||
-			typedEmail.trim() === '' ||
-			typedPassword === '' ||
-			typedPassword.trim() === '' ||
-			typedConfirmPassword === '' ||
-			typedConfirmPassword.trim() === ''
+			typedFirstName === "" ||
+			typedLastName === "" ||
+			typedEmail === "" ||
+			typedEmail.trim() === "" ||
+			typedPassword === "" ||
+			typedPassword.trim() === "" ||
+			typedConfirmPassword === "" ||
+			typedConfirmPassword.trim() === ""
 		) {
-			setError('some field are incomplete');
-		} else if (typedFirstName.trim() === '') {
-			setError('First name cannot be blank');
-		} else if (typedLastName.trim() === '') {
-			setError('Last name cannot be blank');
+			setError("some field are incomplete");
+		} else if (typedFirstName.trim() === "") {
+			setError("First name cannot be blank");
+		} else if (typedLastName.trim() === "") {
+			setError("Last name cannot be blank");
 		} else if (typedConfirmPassword.length < 8 || typedPassword.length < 8) {
-			setError('password must be more then 8 characters');
+			setError("password must be more then 8 characters");
 		} else if (typedPassword !== typedConfirmPassword) {
-			setError('Password and Confirm Password does NOT match');
-		} else if (typedEmail.includes('@') === false) {
-			setError('Email invalid');
+			setError("Password and Confirm Password does NOT match");
+		} else if (typedEmail.includes("@") === false) {
+			setError("Email invalid");
 		} else {
 			setValues({
 				firstName: typedFirstName,
@@ -69,12 +69,12 @@ const SignUp = () => {
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		if (isValid(e)) {
-			axios.post('http://localhost:8080/customers', values).catch(errors => {
-				if (errors.toJSON().message === 'Network Error') {
-					setError('Error... Something gone wrong');
+			axios.post("http://localhost:8080/customers", values).catch(errors => {
+				if (errors.toJSON().message === "Network Error") {
+					setError("Error... Something gone wrong");
 				}
 			});
-			navigate('/login');
+			navigate("/login");
 		}
 	};
 
@@ -143,7 +143,7 @@ const SignUp = () => {
 								required
 							/>
 						</label>
-						<p style={{ color: 'red' }}>{error}</p>
+						<p style={{ color: "red" }}>{error}</p>
 					</div>
 				</div>
 				<div>
