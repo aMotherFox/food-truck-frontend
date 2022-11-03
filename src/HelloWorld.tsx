@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import './App.css';
-import axios from 'axios';
+import React, { useState } from "react";
+import "./App.css";
+import axios from "axios";
 
 const HelloWorld = () => {
-	const [finalResult, setFinalResult] = useState({ message: 'intial message' });
+	const [finalResult, setFinalResult] = useState({ message: "intial message" });
 
 	const handleSubmit = () => {
-		axios.get('http://localhost:8080/helloWorld').then(response => {
+		axios.get("http://localhost:8080/helloWorld").then(response => {
 			setFinalResult(response.data);
 		});
 	};

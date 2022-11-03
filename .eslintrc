@@ -3,7 +3,12 @@
 		"browser": true,
 		"es2021": true
 	},
-	"extends": ["plugin:react/recommended", "airbnb", "airbnb-typescript"],
+	"extends": [
+		"plugin:react/recommended",
+		"airbnb",
+		"airbnb-typescript",
+		"prettier"
+	],
 	"parser": "@typescript-eslint/parser",
 	"parserOptions": {
 		"ecmaFeatures": {
@@ -17,15 +22,19 @@
 	"rules": {
 		"@typescript-eslint/indent": ["error", "tab"],
 		"react/jsx-indent": ["error", "tab"],
+		"react/jsx-indent-props": [2, "tab"],
 		"no-tabs": 0,
 		"object-curly-newline": "off",
 		"arrow-parens": "off",
+		"@typescript-eslint/no-explicit-any": "warn",
 		"react/function-component-definition": [
 			2,
 			{
 				"namedComponents": "arrow-function",
 				"unnamedComponents": "arrow-function"
 			}
-		]
+		],
+		"no-alert": "error",
+		"quotes": [2, "double"]
 	}
 }
