@@ -55,8 +55,10 @@ const Login = () => {
 			// axios.get?
 			// check if email exists in DB
 			// check if password exists in DB
+			// must POST email and password
 			// check if BOTH share the SAME user id
 			// if yes, then setLoginStatus to true
+			// this is where we would GET back from backend?
 			// redirect to profile
 			// in no, catch error
 
