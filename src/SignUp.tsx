@@ -46,7 +46,9 @@ const SignUp = () => {
 		} else if (typedLastName.trim() === "") {
 			setError("Last name cannot be blank");
 		} else if (typedConfirmPassword.length < 8 || typedPassword.length < 8) {
-			setError("password must be more then 8 characters");
+			setError("password must be more than 8 characters");
+		} else if (typedConfirmPassword.length > 50 || typedPassword.length > 50) {
+			setError("password must be more than 8 characters");
 		} else if (typedPassword !== typedConfirmPassword) {
 			setError("Password and Confirm Password does NOT match");
 		} else if (typedEmail.includes("@") === false) {

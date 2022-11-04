@@ -1,64 +1,80 @@
 import React, { useState } from "react";
-// import axios from 'axios';
+import { useNavigate } from "react-router";
+// import axios from "axios";
+
+type FormFieldsType = {
+	email: { value: string };
+	password: { value: string };
+} & EventTarget;
 
 const Login = () => {
-	const login = {
-		email: false,
-		password: false,
-	};
-
+	const navigate = useNavigate();
 	const [error, setError] = useState<string>();
-	const [loginStatus, setLoginStatus] = useState(login);
-	console.log(loginStatus, setLoginStatus);
-	console.log(error, setError);
+	const [loginStatus, setLoginStatus] = useState(false);
+	console.log(error, setError, navigate, loginStatus, setLoginStatus);
 
-	// const dataBase = () => {
-	// 	axios
-	// 		.post('http://localhost:8080/customers', loginStatus)
-	// 		.then(response => console.log(response, 'submitted'))
-	// 		.catch(error => {
-	// 			if (error.toJSON().message === 'Network Error') {
-	// 				alert('error');
-	// 			}
-	// 		});
-	// };
-	// console.log(dataBase);
-
-	// state of email and pass are FALSE
 	// email and password must be entered
 	// find the inputs
 	// find exact same email in DB or throw 400
 	// find exact same password in DB or throw 400
 	// if email and password belong to same customer, set states to TRUE
 	// BOTH TRUE = logged in
-	const handleLogin = (e: any) => {
-		const emailInput = e.target.elements.email.value;
-		const passwordInput = e.target.elements.password.value;
-		// found entered email and password
 
-		// if (emailInput === '' || passwordInput === '') {
-		// 	setError('Please fill out all fields');
-		// }
+	const isValid = (e: React.FormEvent<HTMLFormElement>): boolean => {
+		const target = e.target as FormFieldsType;
 
-		// find exact same email in DB or throw 400
-		// find exact same password in DB or throw 400
-		// no access to DB, will hardcode for testing
-		const correctEmail = "doggedawg@gmail.com";
-		const correctPassword = "Buck123";
-		if (emailInput !== correctEmail || passwordInput !== correctPassword) {
-			setError("Email or Password is incorrect");
+		const emailInput = target.email.value;
+		const passwordInput = target.password.value;
+		if (emailInput === "" || passwordInput === "") {
+			setError("some field are incomplete");
+		} else if (passwordInput.length < 8) {
+			setError("password must be more than 8 characters");
+		} else if (emailInput.includes("@") === false) {
+			setError("Email invalid");
 		} else {
-			setLoginStatus({
-				email: true,
-				password: true,
-			});
+			return true;
 		}
+		return false;
 	};
-
-	// DATA TYPE CANNOT BE ANY
-	const handleSubmit = (e: any) => {
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		handleLogin(e);
+
+		const target = e.target as FormFieldsType;
+		const email = target.email.value;
+		const password = target.password.value;
+
+		if (isValid(e)) {
+			console.log(email, password);
+			// no access to DB, will hardcode for testing
+			const correctEmail = "doggedawg@gmail.com";
+			const correctPassword = "Buck1234";
+			if (email !== correctEmail || password !== correctPassword) {
+				setError("Email or Password is incorrect");
+			}
+
+			// axios.get?
+			// check if email exists in DB
+			// check if password exists in DB
+			// check if BOTH share the SAME user id
+			// if yes, then setLoginStatus to true
+			// redirect to profile
+			// in no, catch error
+
+			// axios
+			// 	.post("http://localhost:8080/customers", {
+			// 		email,
+			// 		password,
+			// 	})
+			// 	.then(() => {
+			// 		navigate("/profile");
+			// 	})
+			// 	.catch(errors => {
+			// 		console.log("errors: ", errors);
+			// 		if (errors.toJSON().message === "Network Error") {
+			// 			setError("Error... Unable to login");
+			// 		}
+			// 	});
+		}
 	};
 
 	return (
@@ -95,7 +111,7 @@ const Login = () => {
 				</div>
 				<div>
 					<button className="submit-button" type="submit">
-						Submit
+						Log In
 					</button>
 				</div>
 			</form>
