@@ -11,55 +11,44 @@ type FormFieldsType = {
 } & EventTarget;
 
 const SignUp = () => {
-	const user = {
-		firstName: "",
-		lastName: "",
-		email: "",
-		password: "",
-		confirmPassword: "",
-	};
 	const navigate = useNavigate();
 	const [error, setError] = useState<string>();
-	const [values, setValues] = useState(user);
+	const [successful, setSuccessful] = useState<string>();
 
 	const isValid = (e: React.FormEvent<HTMLFormElement>): boolean => {
 		const target = e.target as FormFieldsType;
 
-		const typedFirstName = target.firstName.value;
-		const typedLastName = target.lastName.value;
-		const typedEmail = target.email.value;
-		const typedPassword = target.password.value;
-		const typedConfirmPassword = target.confirmPassword.value;
+		const firstName = target.firstName.value;
+		const lastName = target.lastName.value;
+		const email = target.email.value;
+		const password = target.password.value;
+		const confirmPassword = target.confirmPassword.value;
 		if (
-			typedFirstName === "" ||
-			typedLastName === "" ||
-			typedEmail === "" ||
-			typedEmail.trim() === "" ||
-			typedPassword === "" ||
-			typedPassword.trim() === "" ||
-			typedConfirmPassword === "" ||
-			typedConfirmPassword.trim() === ""
+			firstName === "" ||
+			lastName === "" ||
+			email === "" ||
+			email.trim() === "" ||
+			password === "" ||
+			confirmPassword === ""
 		) {
 			setError("some field are incomplete");
-		} else if (typedFirstName.trim() === "") {
+		} else if (firstName.trim() === "") {
 			setError("First name cannot be blank");
-		} else if (typedLastName.trim() === "") {
+		} else if (lastName.trim() === "") {
 			setError("Last name cannot be blank");
-		} else if (typedConfirmPassword.length < 8 || typedPassword.length < 8) {
+		} else if (confirmPassword.length < 8 || password.length < 8) {
 			setError("password must be more then 8 characters");
-		} else if (typedPassword !== typedConfirmPassword) {
+		} else if (confirmPassword.length > 50 || password.length > 50) {
+			setError("password must be less then 50 characters");
+		} else if (confirmPassword.trim() === "" || password.trim() === "") {
+			setError(
+				"Make sure that Password and ConfirmPassword is not BLANK or have any spaces!",
+			);
+		} else if (password !== confirmPassword) {
 			setError("Password and Confirm Password does NOT match");
-		} else if (typedEmail.includes("@") === false) {
+		} else if (email.includes("@") === false) {
 			setError("Email invalid");
 		} else {
-			setValues({
-				firstName: typedFirstName,
-				lastName: typedLastName,
-				email: typedEmail,
-				password: typedPassword,
-				confirmPassword: typedConfirmPassword,
-			});
-
 			return true;
 		}
 
@@ -68,13 +57,33 @@ const SignUp = () => {
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		const target = e.target as FormFieldsType;
+
+		const firstName = target.firstName.value;
+		const lastName = target.lastName.value;
+		const email = target.email.value;
+		const password = target.password.value;
+		const confirmPassword = target.confirmPassword.value;
 		if (isValid(e)) {
-			axios.post("http://localhost:8080/customers", values).catch(errors => {
-				if (errors.toJSON().message === "Network Error") {
-					setError("Error... Something gone wrong");
-				}
-			});
-			navigate("/login");
+			axios
+				.post("http://localhost:8080/customers", {
+					firstName,
+					lastName,
+					email,
+					password,
+					confirmPassword,
+				})
+				.then(() => {
+					setSuccessful("Your sign-up as been succesfull. Please log-in");
+					setTimeout(() => {
+						navigate("/login");
+					}, 2000);
+				})
+				.catch(errors => {
+					if (errors.toJSON().message === "Network Error") {
+						setError("Error... something gone wrong");
+					}
+				});
 		}
 	};
 
@@ -82,6 +91,7 @@ const SignUp = () => {
 		<div>
 			<h1> This is the Sign-Up Page </h1>
 			<form className="form" onSubmit={handleSubmit}>
+				<p style={{ color: "green" }}>{successful}</p>
 				<div className="form-body">
 					<div>
 						<label htmlFor="firstname">
