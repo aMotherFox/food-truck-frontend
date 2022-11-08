@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
-// import axios from "axios";
+import axios from "axios";
 
 type FormFieldsType = {
 	email: { value: string };
@@ -11,7 +11,9 @@ const Login = () => {
 	const navigate = useNavigate();
 	const [error, setError] = useState<string>();
 	const [loginStatus, setLoginStatus] = useState(false);
-	console.log(error, setError, navigate, loginStatus, setLoginStatus);
+	console.log(loginStatus, setLoginStatus);
+	// value for the input element must first be created in the state
+	// then set to that state value in the render() function
 
 	// email and password must be entered
 	// find the inputs
@@ -45,12 +47,37 @@ const Login = () => {
 
 		if (isValid(e)) {
 			console.log(email, password);
-			// no access to DB, will hardcode for testing
+
 			const correctEmail = "doggedawg@gmail.com";
 			const correctPassword = "Buck1234";
 			if (email !== correctEmail || password !== correctPassword) {
 				setError("Email or Password is incorrect");
-			}
+			} // no access to DB, will hardcode for testing
+			axios
+				.post("http://localhost:8080/customers", {
+					// will have to change url to match api
+					email,
+					password,
+				})
+				// WE MUST GET THE VERIFICATION HERE
+				.then(() => {
+					// ONLY HAVE ACCESS TO THE RESPONSE DATA INSIDE OF THE .then
+					setLoginStatus(true);
+					console.log(loginStatus);
+					navigate("/profile");
+					// .then(response => {
+					// if (response.data == true {
+					// 	setLoginStatus(true);
+					// navigate("/profile");
+					// });
+					// backend response would be set to return either true or false
+				})
+				.catch(errors => {
+					console.log("errors: ", errors);
+					if (errors.toJSON().message === "Network Error") {
+						setError("Error... Something went wrong");
+					}
+				});
 
 			// axios.get?
 			// check if email exists in DB
@@ -63,19 +90,22 @@ const Login = () => {
 			// in no, catch error
 
 			// axios
-			// 	.post("http://localhost:8080/customers", {
-			// 		email,
-			// 		password,
-			// 	})
-			// 	.then(() => {
-			// 		navigate("/profile");
-			// 	})
-			// 	.catch(errors => {
-			// 		console.log("errors: ", errors);
-			// 		if (errors.toJSON().message === "Network Error") {
-			// 			setError("Error... Unable to login");
-			// 		}
-			// 	});
+			// .post("http://localhost:8080/customers", {
+			// email,
+			// password
+			// })
+			// .then(response => {
+			// if (response.data == true {
+			// setLoginStatus(true);
+			// navigate("/profile");
+			// });
+			// })
+			// .catch(errors => {
+			// console.log("errors: ", errors);
+			// if (errors.toJSON().message === "Network Error") {
+			// setError("Error... Something went wrong");
+			// }
+			// });
 		}
 	};
 
@@ -83,6 +113,9 @@ const Login = () => {
 		<div>
 			<h1>This is the Login Page</h1>
 			<form className="form" onSubmit={handleSubmit}>
+				{/* onSubmit event is used to execute the handleSubmit function
+			if there’s a change in the input field */}
+				<p style={{ color: "green" }}>Are You Logged In?{loginStatus}</p>
 				<div className="form-body">
 					Login:
 					<div>
