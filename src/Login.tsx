@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
-import axios from "axios";
+// import axios from "axios";
 
 type FormFieldsType = {
 	email: { value: string };
@@ -11,16 +11,6 @@ const Login = () => {
 	const navigate = useNavigate();
 	const [error, setError] = useState<string>();
 	const [loginStatus, setLoginStatus] = useState(false);
-	console.log(loginStatus, setLoginStatus);
-	// value for the input element must first be created in the state
-	// then set to that state value in the render() function
-
-	// email and password must be entered
-	// find the inputs
-	// find exact same email in DB or throw 400
-	// find exact same password in DB or throw 400
-	// if email and password belong to same customer, set states to TRUE
-	// BOTH TRUE = logged in
 
 	const isValid = (e: React.FormEvent<HTMLFormElement>): boolean => {
 		const target = e.target as FormFieldsType;
@@ -46,75 +36,40 @@ const Login = () => {
 		const password = target.password.value;
 
 		if (isValid(e)) {
-			console.log(email, password);
+			const correctEmail = target.email.value;
+			const correctPassword = target.password.value;
 
-			const correctEmail = "doggedawg@gmail.com";
-			const correctPassword = "Buck1234";
-			if (email !== correctEmail || password !== correctPassword) {
-				setError("Email or Password is incorrect");
-			} // no access to DB, will hardcode for testing
-			axios
-				.post("http://localhost:8080/customers", {
-					// will have to change url to match api
-					email,
-					password,
-				})
-				// WE MUST GET THE VERIFICATION HERE
-				.then(() => {
-					// ONLY HAVE ACCESS TO THE RESPONSE DATA INSIDE OF THE .then
-					setLoginStatus(true);
-					console.log(loginStatus);
-					navigate("/profile");
-					// .then(response => {
-					// if (response.data == true {
-					// 	setLoginStatus(true);
-					// navigate("/profile");
-					// });
-					// backend response would be set to return either true or false
-				})
-				.catch(errors => {
-					console.log("errors: ", errors);
-					if (errors.toJSON().message === "Network Error") {
-						setError("Error... Something went wrong");
-					}
-				});
-
-			// axios.get?
-			// check if email exists in DB
-			// check if password exists in DB
-			// must POST email and password
-			// check if BOTH share the SAME user id
-			// if yes, then setLoginStatus to true
-			// this is where we would GET back from backend?
-			// redirect to profile
-			// in no, catch error
-
-			// axios
-			// .post("http://localhost:8080/customers", {
-			// email,
-			// password
-			// })
-			// .then(response => {
-			// if (response.data == true {
-			// setLoginStatus(true);
-			// navigate("/profile");
-			// });
-			// })
-			// .catch(errors => {
-			// console.log("errors: ", errors);
-			// if (errors.toJSON().message === "Network Error") {
-			// setError("Error... Something went wrong");
-			// }
-			// });
+			if (correctEmail === email && correctPassword === password) {
+				setLoginStatus(true);
+				navigate("/profile");
+			} else {
+				setError("Error... Something went wrong");
+			}
 		}
+
+		// axios
+		// 	.post("http://localhost:8080/customers", {
+		// 	email,
+		// 	password
+		// 	})
+		// 	.then(response => {
+		// 	if (response.data == true) {
+		// 	setLoginStatus(true);
+		// 	navigate("/profile");
+		// 	};
+		// 	})
+		// 	.catch(errors => {
+		// 	console.log("errors: ", errors);
+		// 	if (errors.toJSON().message === "Network Error") {
+		// 	setError("Error... Something went wrong");
+		// 	}
+		// 	});
 	};
 
 	return (
 		<div>
 			<h1>This is the Login Page</h1>
 			<form className="form" onSubmit={handleSubmit}>
-				{/* onSubmit event is used to execute the handleSubmit function
-			if there’s a change in the input field */}
 				<p style={{ color: "green" }}>Are You Logged In?{loginStatus}</p>
 				<div className="form-body">
 					Login:
