@@ -77,11 +77,11 @@ const SignUp = () => {
 					setSuccessful("Your sign-up as been succesfull. Please log-in");
 					setTimeout(() => {
 						navigate("/login");
-					}, 2000);
+					}, 2500);
 				})
 				.catch(errors => {
-					if (errors.toJSON().message === "Network Error") {
-						setError("Error... something gone wrong");
+					if (errors.response.data.error === "Bad Request") {
+						setError(errors.response.data.message);
 					}
 				});
 		}
