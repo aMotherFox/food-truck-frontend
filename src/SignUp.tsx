@@ -13,7 +13,6 @@ type FormFieldsType = {
 const SignUp = () => {
 	const navigate = useNavigate();
 	const [error, setError] = useState<string>();
-	const [successful, setSuccessful] = useState<string>();
 
 	const isValid = (e: React.FormEvent<HTMLFormElement>): boolean => {
 		const target = e.target as FormFieldsType;
@@ -37,9 +36,9 @@ const SignUp = () => {
 		} else if (lastName.trim() === "") {
 			setError("Last name cannot be blank");
 		} else if (confirmPassword.length < 8 || password.length < 8) {
-			setError("password must be more then 8 characters");
+			setError("password must be more than 8 characters");
 		} else if (confirmPassword.length > 50 || password.length > 50) {
-			setError("password must be less then 50 characters");
+			setError("password must be less than 50 characters");
 		} else if (confirmPassword.trim() === "" || password.trim() === "") {
 			setError(
 				"Make sure that Password and ConfirmPassword is not BLANK or have any spaces!",
@@ -74,10 +73,7 @@ const SignUp = () => {
 					confirmPassword,
 				})
 				.then(() => {
-					setSuccessful("Your sign-up as been succesfull. Please log-in");
-					setTimeout(() => {
-						navigate("/login");
-					}, 2500);
+					navigate("/login");
 				})
 				.catch(errors => {
 					if (errors.response.data.error === "Bad Request") {
@@ -91,7 +87,6 @@ const SignUp = () => {
 		<div>
 			<h1> This is the Sign-Up Page </h1>
 			<form className="form" onSubmit={handleSubmit}>
-				<p style={{ color: "green" }}>{successful}</p>
 				<div className="form-body">
 					<div>
 						<label htmlFor="firstname">
