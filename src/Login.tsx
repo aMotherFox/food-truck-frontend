@@ -7,10 +7,18 @@ type FormFieldsType = {
 	password: { value: string };
 } & EventTarget;
 
+// type SafeUser = {
+// 	id: number;
+// 	firstName: string;
+// 	lastName: string;
+// 	email: string;
+// };
+
 const Login = () => {
 	const navigate = useNavigate();
 	const [error, setError] = useState<string>();
 	const [loginStatus, setLoginStatus] = useState(false);
+	// const [loggedInUser, setLoggedInUser] = useState<SafeUser>();
 
 	const isValid = (e: React.FormEvent<HTMLFormElement>): boolean => {
 		const target = e.target as FormFieldsType;
@@ -18,11 +26,11 @@ const Login = () => {
 		const emailInput = target.email.value;
 		const passwordInput = target.password.value;
 		if (emailInput === "" || passwordInput === "") {
-			setError("some field are incomplete");
+			setError("some fields are incomplete");
 		} else if (passwordInput.length < 8) {
 			setError("password must be more than 8 characters");
 		} else if (emailInput.includes("@") === false) {
-			setError("Email invalid");
+			setError("Please enter a valid email");
 		} else {
 			return true;
 		}
@@ -41,6 +49,7 @@ const Login = () => {
 
 			if (correctEmail === email && correctPassword === password) {
 				setLoginStatus(true);
+				// setLoggedInUser(response.data);
 				navigate("/profile");
 			} else {
 				setError("Error... Something went wrong");
@@ -53,10 +62,8 @@ const Login = () => {
 		// 	password
 		// 	})
 		// 	.then(response => {
-		// 	if (response.data == true) {
 		// 	setLoginStatus(true);
 		// 	navigate("/profile");
-		// 	};
 		// 	})
 		// 	.catch(errors => {
 		// 	console.log("errors: ", errors);
