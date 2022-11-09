@@ -1,24 +1,24 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
-// import axios from "axios";
+import axios from "axios";
 
 type FormFieldsType = {
 	email: { value: string };
 	password: { value: string };
 } & EventTarget;
 
-// type SafeUser = {
-// 	id: number;
-// 	firstName: string;
-// 	lastName: string;
-// 	email: string;
-// };
+type SafeUser = {
+	id: number;
+	firstName: string;
+	lastName: string;
+	email: string;
+};
 
 const Login = () => {
 	const navigate = useNavigate();
 	const [error, setError] = useState<string>();
 	const [loginStatus, setLoginStatus] = useState(false);
-	// const [loggedInUser, setLoggedInUser] = useState<SafeUser>();
+	const [loggedInUser, setLoggedInUser] = useState<SafeUser>();
 
 	const isValid = (e: React.FormEvent<HTMLFormElement>): boolean => {
 		const target = e.target as FormFieldsType;
@@ -44,33 +44,23 @@ const Login = () => {
 		const password = target.password.value;
 
 		if (isValid(e)) {
-			const correctEmail = target.email.value;
-			const correctPassword = target.password.value;
-
-			if (correctEmail === email && correctPassword === password) {
-				setLoginStatus(true);
-				// setLoggedInUser(response.data);
-				navigate("/profile");
-			} else {
-				setError("Error... Something went wrong");
-			}
+			axios
+				.post("http://localhost:8080/customers", {
+					email,
+					password,
+				})
+				.then(response => {
+					setLoginStatus(true);
+					setLoggedInUser(response.data);
+					navigate("/profile");
+				})
+				.catch(errors => {
+					console.log("errors: ", errors);
+					if (errors.toJSON().message === "Network Error") {
+						setError("Error... Something went wrong");
+					}
+				});
 		}
-
-		// axios
-		// 	.post("http://localhost:8080/customers", {
-		// 	email,
-		// 	password
-		// 	})
-		// 	.then(response => {
-		// 	setLoginStatus(true);
-		// 	navigate("/profile");
-		// 	})
-		// 	.catch(errors => {
-		// 	console.log("errors: ", errors);
-		// 	if (errors.toJSON().message === "Network Error") {
-		// 	setError("Error... Something went wrong");
-		// 	}
-		// 	});
 	};
 
 	return (
