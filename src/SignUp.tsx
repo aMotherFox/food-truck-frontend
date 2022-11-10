@@ -76,7 +76,7 @@ const SignUp = () => {
 					navigate("/login");
 				})
 				.catch(errors => {
-					if (errors.response.data.error === "Bad Request") {
+					if (errors.response.data.status === 400) {
 						setError(errors.response.data.message);
 					}
 				});
