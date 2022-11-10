@@ -17,7 +17,6 @@ type SafeUser = {
 const Login = () => {
 	const navigate = useNavigate();
 	const [error, setError] = useState<string>();
-	const [loggedInUser, setLoggedInUser] = useState<SafeUser>();
 
 	const isValid = (e: React.FormEvent<HTMLFormElement>): boolean => {
 		const target = e.target as FormFieldsType;
@@ -45,14 +44,12 @@ const Login = () => {
 
 		if (isValid(e)) {
 			axios
-				.post("http://localhost:8080/login", {
+				.post<SafeUser>("http://localhost:8080/login", {
 					email,
 					password,
 				})
 				.then(response => {
-					setLoggedInUser(response.data);
-					const id = loggedInUser?.id;
-					navigate(`/profile/${id}`);
+					navigate(`/profile/${response.data.id}`);
 				})
 				.catch(errors => {
 					setError(errors.response.data.message);
@@ -88,7 +85,7 @@ const Login = () => {
 								required
 							/>
 						</label>
-						<div style={{ color: "red" }}>{error}</div>
+						{error && <div style={{ color: "red" }}>{error}</div>}
 					</div>
 				</div>
 				<div>
