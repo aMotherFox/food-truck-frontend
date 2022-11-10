@@ -63,9 +63,7 @@ const Login = () => {
 					navigate(`/profile/${id}`);
 				})
 				.catch(errors => {
-					if (errors.response.data.error === "Bad Request") {
-						setError(errors.response.data.message);
-					}
+					setError(errors.response.data.message);
 				});
 		}
 	};
