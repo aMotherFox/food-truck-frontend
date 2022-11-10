@@ -17,15 +17,7 @@ type SafeUser = {
 const Login = () => {
 	const navigate = useNavigate();
 	const [error, setError] = useState<string>();
-	const [loginStatus, setLoginStatus] = useState(false);
 	const [loggedInUser, setLoggedInUser] = useState<SafeUser>();
-	const [loginMessage, setLoginMessage] = useState<string>("Please login");
-
-	if (loginStatus === true) {
-		setLoginMessage("You are logged in, redirecting");
-		const id = loggedInUser?.id;
-		navigate(`/profile/${id}`);
-	}
 
 	const isValid = (e: React.FormEvent<HTMLFormElement>): boolean => {
 		const target = e.target as FormFieldsType;
@@ -43,6 +35,7 @@ const Login = () => {
 		}
 		return false;
 	};
+
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
@@ -57,7 +50,6 @@ const Login = () => {
 					password,
 				})
 				.then(response => {
-					setLoginStatus(true);
 					setLoggedInUser(response.data);
 					const id = loggedInUser?.id;
 					navigate(`/profile/${id}`);
@@ -72,7 +64,6 @@ const Login = () => {
 		<div>
 			<h1>This is the Login Page</h1>
 			<form className="form" onSubmit={handleSubmit}>
-				<p style={{ color: "green" }}>{loginMessage}</p>
 				<div className="form-body">
 					<div>
 						<label htmlFor="email">
@@ -97,7 +88,7 @@ const Login = () => {
 								required
 							/>
 						</label>
-						<p style={{ color: "red" }}>{error}</p>
+						<div style={{ color: "red" }}>{error}</div>
 					</div>
 				</div>
 				<div>
