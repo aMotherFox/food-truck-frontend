@@ -11,55 +11,43 @@ type FormFieldsType = {
 } & EventTarget;
 
 const SignUp = () => {
-	const user = {
-		firstName: "",
-		lastName: "",
-		email: "",
-		password: "",
-		confirmPassword: "",
-	};
 	const navigate = useNavigate();
 	const [error, setError] = useState<string>();
-	const [values, setValues] = useState(user);
 
 	const isValid = (e: React.FormEvent<HTMLFormElement>): boolean => {
 		const target = e.target as FormFieldsType;
 
-		const typedFirstName = target.firstName.value;
-		const typedLastName = target.lastName.value;
-		const typedEmail = target.email.value;
-		const typedPassword = target.password.value;
-		const typedConfirmPassword = target.confirmPassword.value;
+		const firstName = target.firstName.value;
+		const lastName = target.lastName.value;
+		const email = target.email.value;
+		const password = target.password.value;
+		const confirmPassword = target.confirmPassword.value;
 		if (
-			typedFirstName === "" ||
-			typedLastName === "" ||
-			typedEmail === "" ||
-			typedEmail.trim() === "" ||
-			typedPassword === "" ||
-			typedPassword.trim() === "" ||
-			typedConfirmPassword === "" ||
-			typedConfirmPassword.trim() === ""
+			firstName === "" ||
+			lastName === "" ||
+			email === "" ||
+			email.trim() === "" ||
+			password === "" ||
+			confirmPassword === ""
 		) {
 			setError("some field are incomplete");
-		} else if (typedFirstName.trim() === "") {
+		} else if (firstName.trim() === "") {
 			setError("First name cannot be blank");
-		} else if (typedLastName.trim() === "") {
+		} else if (lastName.trim() === "") {
 			setError("Last name cannot be blank");
-		} else if (typedConfirmPassword.length < 8 || typedPassword.length < 8) {
-			setError("password must be more then 8 characters");
-		} else if (typedPassword !== typedConfirmPassword) {
+		} else if (confirmPassword.length < 8 || password.length < 8) {
+			setError("password must be more than 8 characters");
+		} else if (confirmPassword.length > 50 || password.length > 50) {
+			setError("password must be less than 50 characters");
+		} else if (confirmPassword.trim() === "" || password.trim() === "") {
+			setError(
+				"Make sure that Password and ConfirmPassword is not BLANK or have any spaces!",
+			);
+		} else if (password !== confirmPassword) {
 			setError("Password and Confirm Password does NOT match");
-		} else if (typedEmail.includes("@") === false) {
+		} else if (email.includes("@") === false) {
 			setError("Email invalid");
 		} else {
-			setValues({
-				firstName: typedFirstName,
-				lastName: typedLastName,
-				email: typedEmail,
-				password: typedPassword,
-				confirmPassword: typedConfirmPassword,
-			});
-
 			return true;
 		}
 
@@ -68,13 +56,30 @@ const SignUp = () => {
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		const target = e.target as FormFieldsType;
+
+		const firstName = target.firstName.value;
+		const lastName = target.lastName.value;
+		const email = target.email.value;
+		const password = target.password.value;
+		const confirmPassword = target.confirmPassword.value;
 		if (isValid(e)) {
-			axios.post("http://localhost:8080/customers", values).catch(errors => {
-				if (errors.toJSON().message === "Network Error") {
-					setError("Error... Something gone wrong");
-				}
-			});
-			navigate("/login");
+			axios
+				.post("http://localhost:8080/customers", {
+					firstName,
+					lastName,
+					email,
+					password,
+					confirmPassword,
+				})
+				.then(() => {
+					navigate("/login");
+				})
+				.catch(errors => {
+					if (errors.response.data.status === 400) {
+						setError(errors.response.data.message);
+					}
+				});
 		}
 	};
 
