@@ -19,6 +19,13 @@ const Login = () => {
 	const [error, setError] = useState<string>();
 	const [loginStatus, setLoginStatus] = useState(false);
 	const [loggedInUser, setLoggedInUser] = useState<SafeUser>();
+	const [loginMessage, setLoginMessage] = useState<string>("Please login");
+
+	if (loginStatus === true) {
+		setLoginMessage("You are logged in, redirecting");
+		const id = loggedInUser?.id;
+		navigate(`/profile/${id}`);
+	}
 
 	const isValid = (e: React.FormEvent<HTMLFormElement>): boolean => {
 		const target = e.target as FormFieldsType;
@@ -45,19 +52,19 @@ const Login = () => {
 
 		if (isValid(e)) {
 			axios
-				.post("http://localhost:8080/customers", {
+				.post("http://localhost:8080/login", {
 					email,
 					password,
 				})
 				.then(response => {
 					setLoginStatus(true);
 					setLoggedInUser(response.data);
-					navigate("/profile");
+					const id = loggedInUser?.id;
+					navigate(`/profile/${id}`);
 				})
 				.catch(errors => {
-					console.log("errors: ", errors);
-					if (errors.toJSON().message === "Network Error") {
-						setError("Error... Something went wrong");
+					if (errors.response.data.error === "Bad Request") {
+						setError(errors.response.data.message);
 					}
 				});
 		}
@@ -67,9 +74,8 @@ const Login = () => {
 		<div>
 			<h1>This is the Login Page</h1>
 			<form className="form" onSubmit={handleSubmit}>
-				<p style={{ color: "green" }}>Are You Logged In?{loginStatus}</p>
+				<p style={{ color: "green" }}>{loginMessage}</p>
 				<div className="form-body">
-					Login:
 					<div>
 						<label htmlFor="email">
 							Email:
