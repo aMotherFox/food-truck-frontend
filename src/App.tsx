@@ -1,10 +1,10 @@
 import React from "react";
 import "./styleSheet/App.css";
 import { Route, Routes } from "react-router-dom";
-import Home from "./home/Home";
-import NavBar from "./navBar/NavBar";
-import Entrees from "./entrees/Entrees";
-import Appetizers from "./appetizers/Appetizers";
+import Home from "./customer/Home";
+import NavBar from "./navigatorBar/NavBar";
+import Entrees from "./menu/entrees/Entrees";
+import Appetizers from "./menu/appetizers/Appetizers";
 import SignUp from "./customer/SignUp";
 import Login from "./customer/Login";
 import Profile from "./customer/Profile";
