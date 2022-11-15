@@ -5,9 +5,9 @@ import Home from "./home/Home";
 import NavBar from "./navBar/NavBar";
 import Entrees from "./entrees/Entrees";
 import Appetizers from "./appetizers/Appetizers";
-import SignUp from "./signUp/SignUp";
-import Login from "./login/Login";
-import Profile from "./profile/Profile";
+import SignUp from "./customer/SignUp";
+import Login from "./customer/Login";
+import Profile from "./customer/Profile";
 
 const App = () => (
 	<div className="App">
