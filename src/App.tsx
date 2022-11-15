@@ -1,13 +1,13 @@
 import React from "react";
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import Home from "./Home/Home";
-import NavBar from "./NavBar/NavBar";
-import Entrees from "./Entrees/Entrees";
-import Appetizers from "./Appetizers/Appetizers";
-import SignUp from "./SignUp/SignUp";
-import Login from "./Login/Login";
-import Profile from "./Profile/Profile";
+import Home from "./home/Home";
+import NavBar from "./navBar/NavBar";
+import Entrees from "./entrees/Entrees";
+import Appetizers from "./appetizers/Appetizers";
+import SignUp from "./signUp/SignUp";
+import Login from "./login/Login";
+import Profile from "./profile/Profile";
 
 const App = () => (
 	<div className="App">
