@@ -1,8 +1,8 @@
 import React from "react";
 import "./styleSheet/App.css";
 import { Route, Routes } from "react-router-dom";
-import Home from "./customer/Home";
-import NavBar from "./navigatorBar/NavBar";
+import Home from "./navigation/Home";
+import NavBar from "./navigation/NavBar";
 import Entrees from "./menu/entrees/Entrees";
 import Appetizers from "./menu/appetizers/Appetizers";
 import SignUp from "./customer/SignUp";
