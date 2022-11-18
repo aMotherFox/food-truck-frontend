@@ -1,4 +1,11 @@
+import axios from "axios";
 import React from "react";
+
+type Entree = {
+	entreeName: { value: string };
+	entreeDescription: { value: string };
+	entreePrice: { value: number };
+} & EventTarget;
 
 const Entrees = () => {
 	<div>
@@ -7,7 +14,20 @@ const Entrees = () => {
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		console.log("i have been clicked");
+		const target = e.target as Entree;
+		const name = target.entreeName.value;
+		const description = target.entreeDescription.value;
+		const price = target.entreePrice.value;
+
+		axios.post<Entree>("http://localhost:8080/new-entree", { 
+			name,
+			description,
+			price
+	})
+	.then(response =>  { 
+		console.log("yay new entree added")
+	})
+		});
 	};
 
 	/* 
