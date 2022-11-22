@@ -19,15 +19,15 @@ const Entrees = () => {
 		const description = target.entreeDescription.value;
 		const price = target.entreePrice.value;
 
-		axios.post<Entree>("http://localhost:8080/new-entree", { 
-			name,
-			description,
-			price
-	})
-	.then(response =>  { 
-		console.log("yay new entree added")
-	})
-		});
+		axios
+			.post<Entree>("http://localhost:8080/new-entree", {
+				name,
+				description,
+				price,
+			})
+			.then(response => {
+				console.log("yay new entree added");
+			});
 	};
 
 	/* 
