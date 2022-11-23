@@ -2,9 +2,9 @@ import axios from "axios";
 import React from "react";
 
 type Entree = {
-	entreeName: { value: string };
-	entreeDescription: { value: string };
-	entreePrice: { value: number };
+	name: { value: string };
+	description: { value: string };
+	price: { value: number };
 } & EventTarget;
 
 const Entrees = () => {
@@ -17,13 +17,13 @@ const Entrees = () => {
 		
 		const target = e.target as Entree;
 
-		const name = target.entreeName.value;
-		const description = target.entreeDescription.value;
-		const price = target.entreePrice.value;
+		const name = target.name.value;
+		const description = target.description.value;
+		const price = target.price.value;
 		console.log("ive been clicked");
 
 		axios
-			.post<Entree>("http://localhost:8080/new-entree", {
+			.post<Entree>("http://localhost:8080/entree", {
 				name,
 				description,
 				price,
@@ -63,7 +63,7 @@ const Entrees = () => {
 						Entree Name:
 						<input
 							className="form_input"
-							name="entreeName"
+							name="name"
 							type="text"
 							placeholder="Entree Name"
 							required
@@ -74,7 +74,7 @@ const Entrees = () => {
 						Entree Description:
 						<input
 							className="form_input"
-							name="entreeDescription"
+							name="description"
 							type="text"
 							placeholder="Entree Description"
 							required
@@ -85,7 +85,7 @@ const Entrees = () => {
 						Entree Price:
 						<input
 							className="form_input"
-							name="entreePrice"
+							name="price"
 							type="number"
 							placeholder="Entree Price"
 							required
