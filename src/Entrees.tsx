@@ -14,10 +14,13 @@ const Entrees = () => {
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		
 		const target = e.target as Entree;
+
 		const name = target.entreeName.value;
 		const description = target.entreeDescription.value;
 		const price = target.entreePrice.value;
+		console.log("ive been clicked");
 
 		axios
 			.post<Entree>("http://localhost:8080/new-entree", {
@@ -25,7 +28,7 @@ const Entrees = () => {
 				description,
 				price,
 			})
-			.then(response => {
+			.then(() => {
 				console.log("yay new entree added");
 			});
 	};
@@ -60,8 +63,8 @@ const Entrees = () => {
 						Entree Name:
 						<input
 							className="form_input"
-							name="entree_name"
-							type="entree_name"
+							name="entreeName"
+							type="text"
 							placeholder="Entree Name"
 							required
 						/>
@@ -71,8 +74,8 @@ const Entrees = () => {
 						Entree Description:
 						<input
 							className="form_input"
-							name="entree_description"
-							type="entree_description"
+							name="entreeDescription"
+							type="text"
 							placeholder="Entree Description"
 							required
 						/>
@@ -82,8 +85,8 @@ const Entrees = () => {
 						Entree Price:
 						<input
 							className="form_input"
-							name="entree_price"
-							type="entree_price"
+							name="entreePrice"
+							type="number"
 							placeholder="Entree Price"
 							required
 						/>

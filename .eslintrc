@@ -22,7 +22,7 @@
 	"rules": {
 		"indent": ["error", "tab"],
 		// // toDo: remove line 24 before putting in a PR 
-		// "no-console": 0,
+		"no-console": 0,
 		"react/jsx-indent-props": [2, "tab"],
 		"no-tabs": 0,
 		"object-curly-newline": "off",
