@@ -1,5 +1,5 @@
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 
 type Entree = {
 	name: { value: string };
@@ -8,13 +8,15 @@ type Entree = {
 } & EventTarget;
 
 const Entrees = () => {
+
+	const [errorMessage, setErrorMessage] = useState<string>();
 	<div>
 		<h1>This is the Entrees page </h1>
 	</div>;
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		
+
 		const target = e.target as Entree;
 
 		const name = target.name.value;
@@ -29,7 +31,12 @@ const Entrees = () => {
 				price,
 			})
 			.then(() => {
-				console.log("yay new entree added");
+				console.log("it worked yall");
+			})
+			.catch(error => {
+				if (error.response.data.status === 400) {
+					setErrorMessage(error.response.data.message);
+				}
 			});
 	};
 
@@ -91,6 +98,7 @@ const Entrees = () => {
 							required
 						/>
 					</label>
+					{errorMessage && <div style={{ color: "red" }}>{errorMessage}</div>}
 					<button className="submit-button" type="submit">
 						Create New Entree
 					</button>
