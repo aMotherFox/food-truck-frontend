@@ -8,7 +8,7 @@ type Entree = {
 } & EventTarget;
 
 const Entrees = () => {
-	const [errorMessage, setErrorMessage] = useState<string>();
+	const [statusMessage, setStatusMessage] = useState<string>();
 
 	const isValid = (e: React.FormEvent<HTMLFormElement>): boolean => {
 		const target = e.target as Entree;
@@ -17,13 +17,15 @@ const Entrees = () => {
 		const description = target.description.value;
 		const price = target.price.value;
 		if (name === "" || description === "" || price === 0) {
-			setErrorMessage("some field are incomplete");
+			setStatusMessage("some fields are incomplete");
 		} else if (name.trim() === "") {
-			setErrorMessage("Name cannot be blank");
-		} else if (description.length < 8) {
-			setErrorMessage("description must be more than 8 characters");
-		} else if (description.length > 50) {
-			setErrorMessage("description must be less than 50 characters");
+			setStatusMessage("Entree name cannot be blank");
+		} else if (name.length > 100) {
+			setStatusMessage("Entree name cannot be over 100 characters");
+		} else if (description.trim() === "") {
+			setStatusMessage("Entree description cannot be blank");
+		} else if (description.length > 160) {
+			setStatusMessage("description must be less than 160 characters");
 		} else {
 			return true;
 		}
@@ -48,11 +50,11 @@ const Entrees = () => {
 					price,
 				})
 				.then(() => {
-					console.log("it worked yall");
+					setStatusMessage("successfully added a new entree");
 				})
 				.catch(error => {
 					if (error.response.data.status === 400) {
-						setErrorMessage(error.response.data.message);
+						setStatusMessage(error.response.data.message);
 					}
 				});
 		}
@@ -91,7 +93,7 @@ const Entrees = () => {
 								className="form_input"
 								name="name"
 								type="text"
-								placeholder="Entree Name"
+								placeholder="'Big Bad Burger'"
 								required
 							/>
 						</label>
@@ -102,7 +104,7 @@ const Entrees = () => {
 								className="form_input"
 								name="description"
 								type="text"
-								placeholder="Entree Description"
+								placeholder="'The tastiest burger'"
 								required
 							/>
 						</label>
@@ -113,11 +115,11 @@ const Entrees = () => {
 								className="form_input"
 								name="price"
 								type="number"
-								placeholder="Entree Price"
+								placeholder="8"
 								required
 							/>
 						</label>
-						{errorMessage && <div style={{ color: "red" }}>{errorMessage}</div>}
+						<div style={{ color: "red" }}>{statusMessage}</div>
 					</div>
 					<button className="submit-button" type="submit">
 						Create New Entree
