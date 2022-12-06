@@ -10,6 +10,25 @@ import axios from "axios";
 const Appetizers = () => {
 	const navigate = useNavigate();
 	const [error, setError] = useState<string>();
+
+	const isValid = (e: React.FormEvent<HTMLFormElement>): boolean => {
+		const target = e.target as Appetizer;
+
+		const name = target.name.value;
+		const price = target.price.value;
+		if (name === "" || price === 0) {
+			setError("some fields are incomplete");
+		} else if (name.trim() === "") {
+			setError("Appetizer name cannot be blank");
+		} else if (name.length > 100) {
+			setError("Appetizer name cannot be over 100 characters");
+		} else {
+			return true;
+		}
+
+		return false;
+	};
+
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 	};
