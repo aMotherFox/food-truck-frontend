@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import axios from "axios";
 
-// type Appetizer = {
-// 	name: { value: string };
-// 	price: { value: number };
-// };
+type Appetizer = {
+	name: { value: string };
+	price: { value: number };
+} & EventTarget;
 
 const Appetizers = () => {
 	const navigate = useNavigate();
@@ -14,14 +14,14 @@ const Appetizers = () => {
 	const isValid = (e: React.FormEvent<HTMLFormElement>): boolean => {
 		const target = e.target as Appetizer;
 
-		const name = target.name.value;
-		const price = target.price.value;
-		if (name === "" || price === 0) {
+		const nameInput = target.name.value;
+		const priceInput = target.price.value;
+		if (nameInput === "" || priceInput === 0) {
 			setError("some fields are incomplete");
-		} else if (name.trim() === "") {
+		} else if (nameInput.trim() === "") {
 			setError("Appetizer name cannot be blank");
-		} else if (name.length > 100) {
-			setError("Appetizer name cannot be over 100 characters");
+		} else if (nameInput.length > 50) {
+			setError("Appetizer name cannot be over 50 characters");
 		} else {
 			return true;
 		}
@@ -31,6 +31,23 @@ const Appetizers = () => {
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+
+		const target = e.target as Appetizer;
+		const name = target.name.value;
+		const price = target.price.value;
+		if (isValid(e)) {
+			axios
+				.post<Appetizer>("http://localhost:8080/appetizers", {
+					name,
+					price,
+				})
+				.then(() => {
+					navigate("/home");
+				})
+				.catch(errors => {
+					setError(errors.response.data.message);
+				});
+		}
 	};
 
 	return (
@@ -58,7 +75,7 @@ const Appetizers = () => {
 									className="form_input"
 									name="price"
 									type="number"
-									placeholder="8"
+									placeholder=""
 									required
 								/>
 							</label>
