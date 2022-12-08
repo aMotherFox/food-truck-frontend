@@ -42,7 +42,7 @@ const Appetizers = () => {
 					price,
 				})
 				.then(() => {
-					navigate("/home");
+					navigate("/entrees");
 				})
 				.catch(errors => {
 					setError(errors.response.data.message);
