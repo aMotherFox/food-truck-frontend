@@ -31,7 +31,6 @@ const Entrees = () => {
 	};
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-		console.log("ive been clicked");
 		e.preventDefault();
 
 		const target = e.target as Entree;
@@ -54,8 +53,6 @@ const Entrees = () => {
 				});
 		}
 	};
-
-	console.log("statusMessage *********", statusMessage);
 
 	return (
 		<div>
