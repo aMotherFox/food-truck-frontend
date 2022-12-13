@@ -12,13 +12,10 @@ const Entrees = () => {
 
 	const isValid = (e: React.FormEvent<HTMLFormElement>): boolean => {
 		const target = e.target as Entree;
-
 		const name = target.name.value;
 		const description = target.description.value;
-		const price = target.price.value;
-		if (name === "" || description === "" || price === 0) {
-			setStatusMessage("some fields are incomplete");
-		} else if (name.trim() === "") {
+
+		if (name.trim() === "") {
 			setStatusMessage("Entree name cannot be blank");
 		} else if (name.length > 100) {
 			setStatusMessage("Entree name cannot be over 100 characters");
@@ -34,6 +31,7 @@ const Entrees = () => {
 	};
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+		console.log("ive been clicked");
 		e.preventDefault();
 
 		const target = e.target as Entree;
@@ -41,7 +39,6 @@ const Entrees = () => {
 		const name = target.name.value;
 		const description = target.description.value;
 		const price = target.price.value;
-		console.log("ive been clicked");
 		if (isValid(e)) {
 			axios
 				.post<Entree>("http://localhost:8080/entree", {
@@ -60,18 +57,8 @@ const Entrees = () => {
 		}
 	};
 
-	/* 
-	creating a new entree: 
-	a user adds the entree information: 
-		- entree name
-		- entree description
-		- entree price
-	hit submit
-	in the BE this info is added to the DB
-	if successful return 200
-	if unsuccessful return 500 "new entree could not be created"
+	console.log("statusMessage *********", statusMessage);
 
-	*/
 
 	return (
 		<div>
