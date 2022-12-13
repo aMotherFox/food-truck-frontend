@@ -50,15 +50,12 @@ const Entrees = () => {
 					setStatusMessage("successfully added a new entree");
 				})
 				.catch(error => {
-					if (error.response.data.status === 400) {
-						setStatusMessage(error.response.data.message);
-					}
+					setStatusMessage(error.response.data.message);
 				});
 		}
 	};
 
 	console.log("statusMessage *********", statusMessage);
-
 
 	return (
 		<div>
