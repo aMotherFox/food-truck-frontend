@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 type FormFieldsType = {
@@ -52,7 +52,9 @@ const Login = () => {
 					navigate(`/profile/${response.data.id}`);
 				})
 				.catch(errors => {
-					setError(errors.response.data.message);
+					if (errors.response.data.status === 404) {
+						setError(errors.response.data.message);
+					}
 				});
 		}
 	};

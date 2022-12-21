@@ -1,10 +1,10 @@
 import React from "react";
-import "./styleSheet/App.css";
+import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import Home from "./navigation/Home";
 import NavBar from "./navigation/NavBar";
-import Entrees from "./menu/entrees/Entrees";
-import Appetizers from "./menu/appetizers/Appetizers";
+import Entrees from "./Entrees";
+import Appetizers from "./appetizers/Appetizers";
 import SignUp from "./customer/SignUp";
 import Login from "./customer/Login";
 import Profile from "./customer/Profile";
@@ -20,7 +20,6 @@ const App = () => (
 			<Route path="/login" element={<Login />} />
 			<Route path="/profile" element={<Profile />} />
 		</Routes>
-		<p>Working on the Navbar! </p>
 	</div>
 );
 
