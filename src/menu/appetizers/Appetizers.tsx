@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router";
+import React, { useEffect, useState } from "react";
+// import { useNavigate } from "react-router";
 import axios from "axios";
 
 type Appetizer = {
@@ -8,8 +8,9 @@ type Appetizer = {
 } & EventTarget;
 
 const Appetizers = () => {
-	const navigate = useNavigate();
+	// const navigate = useNavigate();
 	const [error, setError] = useState<string>();
+	// const [appetizers, setAppetizers] = useState<Appetizer>();
 
 	const isValid = (e: React.FormEvent<HTMLFormElement>): boolean => {
 		const target = e.target as Appetizer;
@@ -42,12 +43,32 @@ const Appetizers = () => {
 					price,
 				})
 				.then(() => {
-					navigate("/entrees");
+					console.log("inside axios.post successfull api call");
 				})
 				.catch(errors => {
 					setError(errors.response.data.message);
 				});
+
+			useEffect(() => {
+				console.log("we are inside the useEffect");
+				axios
+					.get("http://localhost:8080/appetizers")
+					.then(response => {
+						console.log("response.data", response.data);
+					})
+					.catch(errors => {
+						setError(errors.response.data.message);
+					}); // does not display most recent created appetizer
+			});
 		}
+
+		// add in menu GET
+		// api call that just gets data (response.data)
+		// will map through data and it'll map out new app created
+		// data comes back as an array of objects
+		// not coming back with most recent app created
+		// SHOULD BE ABE TO GET APPS WITHOUT POSTING ONE
+		// useEffect to get apps
 	};
 
 	return (
@@ -87,6 +108,11 @@ const Appetizers = () => {
 					</button>
 				</div>
 			</form>
+			<div>
+				<a href="http://localhost:3000/appetizer_menu">
+					Click to see our Appetizer Menu!
+				</a>
+			</div>
 		</div>
 	);
 };
