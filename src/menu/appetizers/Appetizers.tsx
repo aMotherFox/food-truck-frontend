@@ -7,10 +7,12 @@ type Appetizer = {
 	price: { value: number };
 } & EventTarget;
 
+// const initalAppetizers
+
 const Appetizers = () => {
 	// const navigate = useNavigate();
 	const [error, setError] = useState<string>();
-	// const [appetizers, setAppetizers] = useState<Appetizer>();
+	const [appetizers, setAppetizers] = useState<Appetizer[]>([]);
 
 	const isValid = (e: React.FormEvent<HTMLFormElement>): boolean => {
 		const target = e.target as Appetizer;
@@ -30,12 +32,26 @@ const Appetizers = () => {
 		return false;
 	};
 
+	useEffect(() => {
+		console.log("we are inside the useEffect");
+		axios
+			.get("http://localhost:8080/appetizers")
+			.then(response => {
+				console.log("response.data", response.data);
+				setAppetizers(response.data);
+			})
+			.catch(errors => {
+				setError(errors.response.data.message);
+			}); // does not display most recent created appetizer
+	}, []);
+	console.log("appetizers after useEffect: ", appetizers);
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		const target = e.target as Appetizer;
 		const name = target.name.value;
 		const price = target.price.value;
+
 		if (isValid(e)) {
 			axios
 				.post<Appetizer>("http://localhost:8080/appetizers", {
@@ -48,18 +64,7 @@ const Appetizers = () => {
 				.catch(errors => {
 					setError(errors.response.data.message);
 				});
-
-			useEffect(() => {
-				console.log("we are inside the useEffect");
-				axios
-					.get("http://localhost:8080/appetizers")
-					.then(response => {
-						console.log("response.data", response.data);
-					})
-					.catch(errors => {
-						setError(errors.response.data.message);
-					}); // does not display most recent created appetizer
-			});
+			console.log("appetizers", appetizers);
 		}
 
 		// add in menu GET
@@ -109,9 +114,12 @@ const Appetizers = () => {
 				</div>
 			</form>
 			<div>
-				<a href="http://localhost:3000/appetizer_menu">
-					Click to see our Appetizer Menu!
-				</a>
+				{appetizers.map(appetizer => (
+					<div key={appetizer.name}>
+						<h1>{appetizer.name}</h1>
+						<h2>{appetizer.price}</h2>
+					</div>
+				))}
 			</div>
 		</div>
 	);
