@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 type Entree = {
 	name: { value: string };
@@ -7,8 +7,15 @@ type Entree = {
 	price: { value: number };
 } & EventTarget;
 
+type EntreeObjects = {
+	id: number;
+	name: string;
+	price: number;
+	description: string;
+};
 const Entrees = () => {
 	const [statusMessage, setStatusMessage] = useState<string>();
+	const [entreeData, setEntreeData] = useState<EntreeObjects[]>([]);
 
 	const isValid = (e: React.FormEvent<HTMLFormElement>): boolean => {
 		const target = e.target as Entree;
@@ -29,6 +36,22 @@ const Entrees = () => {
 
 		return false;
 	};
+
+	const getData = () => {
+		axios
+			.get("http://localhost:8080/entree")
+			.then(response => {
+				setEntreeData(response.data);
+				// setStatusMessage("successfully added a new entree");
+			})
+			.catch(error => {
+				setStatusMessage(error.response.data.message);
+			});
+	};
+
+	useEffect(() => {
+		getData();
+	}, [statusMessage]);
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -107,6 +130,21 @@ const Entrees = () => {
 					</button>
 				</div>
 			</form>
+			{entreeData.map(entree => (
+				<>
+					<div
+						style={{
+							display: "flex",
+							flexDirection: "column",
+							alignItems: "flex-start",
+						}}
+					/>
+					{/* <p>{entree.id}</p> */}
+					<p>{entree.name}</p>
+					<p>{entree.description}</p>
+					<p>{entree.price}</p>
+				</>
+			))}
 		</div>
 	);
 };
