@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 type Appetizer = {
@@ -7,21 +6,29 @@ type Appetizer = {
 	price: { value: number };
 } & EventTarget;
 
+type CreatedAppetizer = {
+	id: number;
+	name: string;
+	price: number;
+};
+
 const Appetizers = () => {
-	const navigate = useNavigate();
 	const [error, setError] = useState<string>();
+	const [appetizers, setAppetizers] = useState<CreatedAppetizer[]>([]);
 
 	const isValid = (e: React.FormEvent<HTMLFormElement>): boolean => {
 		const target = e.target as Appetizer;
-
 		const nameInput = target.name.value;
 		const priceInput = target.price.value;
+
 		if (nameInput === "" || priceInput === 0) {
 			setError("some fields are incomplete");
 		} else if (nameInput.trim() === "") {
 			setError("Appetizer name cannot be blank");
 		} else if (nameInput.length > 50) {
 			setError("Appetizer name cannot be over 50 characters");
+		} else if (nameInput.length < 2) {
+			setError("Appetizer name cannot be under 2 characters");
 		} else {
 			return true;
 		}
@@ -29,21 +36,31 @@ const Appetizers = () => {
 		return false;
 	};
 
+	useEffect(() => {
+		axios
+			.get("http://localhost:8080/appetizers")
+			.then(response => {
+				setAppetizers(response.data);
+			})
+			.catch(errors => {
+				setError(errors.response.data.message);
+			});
+	}, [error]);
+
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		const target = e.target as Appetizer;
 		const name = target.name.value;
 		const price = target.price.value;
+
 		if (isValid(e)) {
 			axios
 				.post<Appetizer>("http://localhost:8080/appetizers", {
 					name,
 					price,
 				})
-				.then(() => {
-					navigate("/entrees");
-				})
+				.then(() => {})
 				.catch(errors => {
 					setError(errors.response.data.message);
 				});
@@ -87,6 +104,14 @@ const Appetizers = () => {
 					</button>
 				</div>
 			</form>
+			<div>
+				{appetizers.map(appetizer => (
+					<div key={appetizer.id}>
+						<h1>{appetizer.name}</h1>
+						<h2>{appetizer.price}</h2>
+					</div>
+				))}
+			</div>
 		</div>
 	);
 };
