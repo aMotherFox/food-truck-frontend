@@ -7,13 +7,10 @@ type Appetizer = {
 } & EventTarget;
 
 type CreatedAppetizer = {
-	// id: number;
+	id: number;
 	name: string;
 	price: number;
 };
-
-// TODO: API only called once, console logs should only be showing once (at most twice if mappingg, etc)
-// on start the multiples happen
 
 const Appetizers = () => {
 	const [error, setError] = useState<string>();
@@ -40,18 +37,15 @@ const Appetizers = () => {
 	};
 
 	useEffect(() => {
-		console.log("we are inside the useEffect");
 		axios
 			.get("http://localhost:8080/appetizers")
 			.then(response => {
-				console.log("response.data", response.data);
 				setAppetizers(response.data);
 			})
 			.catch(errors => {
 				setError(errors.response.data.message);
 			});
 	}, [error]);
-	console.log("appetizers after useEffect: ", appetizers);
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -66,13 +60,10 @@ const Appetizers = () => {
 					name,
 					price,
 				})
-				.then(() => {
-					console.log("inside axios.post successfull api call");
-				})
+				.then(() => {})
 				.catch(errors => {
 					setError(errors.response.data.message);
 				});
-			console.log("appetizers", appetizers);
 		}
 	};
 
@@ -115,7 +106,7 @@ const Appetizers = () => {
 			</form>
 			<div>
 				{appetizers.map(appetizer => (
-					<div key={appetizer.name}>
+					<div key={appetizer.id}>
 						<h1>{appetizer.name}</h1>
 						<h2>{appetizer.price}</h2>
 					</div>
