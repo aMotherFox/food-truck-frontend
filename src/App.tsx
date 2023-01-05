@@ -8,7 +8,6 @@ import Appetizers from "./appetizers/Appetizers";
 import SignUp from "./customer/SignUp";
 import Login from "./customer/Login";
 import Profile from "./customer/Profile";
-import AppetizerMenu from "./menu/appetizers/AppetizerMenu";
 
 const App = () => (
 	<div className="App">
@@ -17,7 +16,6 @@ const App = () => (
 			<Route path="/" element={<Home />} />
 			<Route path="/entrees" element={<Entrees />} />
 			<Route path="/appetizers" element={<Appetizers />} />
-			<Route path="/appetizer_menu" element={<AppetizerMenu />} />
 			<Route path="/sign-up" element={<SignUp />} />
 			<Route path="/login" element={<Login />} />
 			<Route path="/profile" element={<Profile />} />
