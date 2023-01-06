@@ -47,7 +47,7 @@ const Entrees = () => {
 			.catch(error => {
 				setStatusMessage(error.response.data.message);
 			});
-	}, [statusMessage]);
+	}, []);
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
