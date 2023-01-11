@@ -1,5 +1,5 @@
 import React from "react";
-import { Tabs, TabList, Tab, } from "@chakra-ui/react";
+import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@chakra-ui/react";
 import AppetizerTab from "../orders/AppetizerTab";
 import EntreeTab from "../orders/EntreeTab";
 
@@ -10,11 +10,19 @@ const Home = () => (
 		<h3>Order here</h3>
 		<div>
 			<Tabs>
-				<TabList style={{justifyContent: "center"}}>
-					<Tab> <AppetizerTab/> </Tab>
-					<Tab><EntreeTab/></Tab>
-
+				<TabList style={{ justifyContent: "center" }}>
+					<Tab>Appetizers</Tab>
+					<Tab>Entrees</Tab>
 				</TabList>
+
+				<TabPanels>
+					<TabPanel>
+						<AppetizerTab />
+					</TabPanel>
+					<TabPanel>
+						<EntreeTab />
+					</TabPanel>
+				</TabPanels>
 			</Tabs>
 		</div>
 	</div>

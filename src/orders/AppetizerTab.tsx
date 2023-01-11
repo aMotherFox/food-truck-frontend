@@ -4,7 +4,12 @@ import React from "react";
 const AppetizerTab = () => {
 	const test = "test";
 
-	return <h1>Appetizers</h1>;
+	return (
+		<>
+			<h1>Appetizers</h1>
+			<h2>${test}</h2>
+		</>
+	);
 };
 
 export default AppetizerTab;
