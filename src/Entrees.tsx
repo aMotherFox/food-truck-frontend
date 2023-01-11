@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 type Entree = {
 	name: { value: string };
@@ -7,8 +7,16 @@ type Entree = {
 	price: { value: number };
 } & EventTarget;
 
+type EntreeObjects = {
+	id: number;
+	name: string;
+	price: number;
+	description: string;
+};
+
 const Entrees = () => {
 	const [statusMessage, setStatusMessage] = useState<string>();
+	const [entreeData, setEntreeData] = useState<EntreeObjects[]>([]);
 
 	const isValid = (e: React.FormEvent<HTMLFormElement>): boolean => {
 		const target = e.target as Entree;
@@ -29,6 +37,17 @@ const Entrees = () => {
 
 		return false;
 	};
+
+	useEffect(() => {
+		axios
+			.get("http://localhost:8080/entree")
+			.then(response => {
+				setEntreeData(response.data);
+			})
+			.catch(error => {
+				setStatusMessage(error.response.data.message);
+			});
+	}, []);
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -107,6 +126,15 @@ const Entrees = () => {
 					</button>
 				</div>
 			</form>
+			<div>
+				{entreeData.map(entree => (
+					<div key={entree.id}>
+						<p>{entree.name}</p>
+						<p>{entree.description}</p>
+						<p>{entree.price}</p>
+					</div>
+				))}
+			</div>
 		</div>
 	);
 };
