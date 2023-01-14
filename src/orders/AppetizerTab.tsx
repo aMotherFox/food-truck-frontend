@@ -19,12 +19,12 @@ const AppetizerTab = () => {
 	// make front end only/hardcoded orders where the apps/entrees get added to the cart when selected
 
 	// user selects an appetizer to add to order
-	// we already have app ids and info on the front end since they're being displayed, right?
+	// we already have app ids and info on the front end since they're being displayed so they do not need to be fetched a second time
 	// selected app is added to an order array of apps and entrees which includes their ids and stuff
 	// this order array is displayed on the front end in the cart? 
-	// selected app is fetched and displayed in the cart box (is this too resource intensive? should I do this without calling the api yet? or is there no other good way?)
+
 	// when a user is ready to checkout they click the checkout box
-	// this calls the create order api
+	// this calls the create order api which has an order id, customer id, appetizers with their ids, entrees with their ids, as well as quantities.
 	// sending the request body to the endpoint
 	// when this is successful
 	// the user is pushed to a confirmation page
