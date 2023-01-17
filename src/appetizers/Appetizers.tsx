@@ -45,7 +45,7 @@ const Appetizers = () => {
 			.catch(errors => {
 				setError(errors.response.data.message);
 			});
-	}, [error]);
+	}, [error]); //  We need to remove this
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
