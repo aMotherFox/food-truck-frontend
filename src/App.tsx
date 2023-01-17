@@ -4,7 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 import Home from "./navigation/Home";
 import NavBar from "./navigation/NavBar";
-import Entrees from "./Entrees";
+import Entrees from "./entrees/Entrees";
 import Appetizers from "./appetizers/Appetizers";
 import SignUp from "./customer/SignUp";
 import Login from "./customer/Login";

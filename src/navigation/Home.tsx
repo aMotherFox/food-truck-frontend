@@ -1,12 +1,12 @@
 import React from "react";
-import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@chakra-ui/react";
+import { Tabs, TabList, Tab, TabPanels, TabPanel, Heading } from "@chakra-ui/react";
 import AppetizerTab from "../orders/AppetizerTab";
 import EntreeTab from "../orders/EntreeTab";
 
 const Home = () => (
 	<div>
-		<h1>Zombie Foods </h1>
-		<h6>We swear its not people</h6>
+		<Heading>Zombie Foods </Heading>
+		<h1>Definitely people food</h1>
 		<h3>Order here</h3>
 		<div style={{display: "flex", justifyContent: "space-around" }}>
 			
