@@ -8,8 +8,7 @@ import {
 	SimpleGrid,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import AppetizerApi from "../appetizers/AppetizerApis";
-// import axios from "axios";
+import  { getAllAppetizers } from "../appetizers/AppetizerApis";
 
 const AppetizerTab = () => {
 	// story todos MACRO
@@ -37,7 +36,7 @@ const AppetizerTab = () => {
 	const [appetizers, setAppetizers] = useState<Appetizer[]>([])
 
 	useEffect(() => {
-		AppetizerApi.getAll()
+		getAllAppetizers()
 			.then(response => {
 				console.log("yay with response", response);
 				setAppetizers(response.data)
@@ -47,34 +46,10 @@ const AppetizerTab = () => {
 			});
 	}, []);
 
-	// const hardCodedApps: Appetizer[] = [
-	// 	{
-	// 		id: 1,
-	// 		name: "Spicy Big Guy",
-	// 		price: 5,
-	// 	},
-	// 	{
-	// 		id: 2,
-	// 		name: "Tasty little tots",
-	// 		price: 8,
-	// 	},
-	// 	{
-	// 		id: 3,
-	// 		name: "Surpriser",
-	// 		price: 15,
-	// 	},
-	// 	{
-	// 		id: 4,
-	// 		name: "Snackie",
-	// 		price: 2.5,
-	// 	},
-	// ];
-
 	return (
 		<SimpleGrid
 			spacing={4}
 			columns={4}
-			// templateColumns="repeat(auto-fill, minmax(800px, 1fr))"
 		>
 			{appetizers.map(appetizer => (
 				<Card align="center" key={appetizer.id}>

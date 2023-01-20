@@ -8,7 +8,8 @@ import {
 	SimpleGrid,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import EntreeApi from "../entrees/EntreeApis";
+import { getAllAppetizers } from "../appetizers/AppetizerApis";
+// import EntreeApi from "../entrees/EntreeApis";
 
 const EntreeTab = () => {
 	type Entree = {
@@ -20,7 +21,7 @@ const EntreeTab = () => {
 	const [entrees, setEntrees] = useState<Entree[]>([]);
 
 	useEffect(() => {
-		EntreeApi.getAll()
+		getAllAppetizers()
 			.then(response => {
 				console.log("yay entrees with response", response);
 				setEntrees(response.data);

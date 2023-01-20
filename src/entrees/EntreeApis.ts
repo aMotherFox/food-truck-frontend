@@ -1,8 +1,5 @@
 import axios from "axios";
 
-export default class EntreeApi {
-  
-	static getAll() {
-		return axios.get("http://localhost:8080/entree");
-	}
-}
+const EntreeApi = () => {}
+export const getAllEntrees = () => axios.get("http://localhost:8080/appetizers");
+export default EntreeApi;
