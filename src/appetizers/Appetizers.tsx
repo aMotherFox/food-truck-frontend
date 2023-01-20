@@ -45,7 +45,11 @@ const Appetizers = () => {
 			.catch(errors => {
 				setError(errors.response.data.message);
 			});
-	}, [error]); //  We need to remove this
+	}, []);
+
+	useEffect(() => {
+		console.log("New Appetizer:", appetizers);
+	}, [appetizers]);
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -60,7 +64,9 @@ const Appetizers = () => {
 					name,
 					price,
 				})
-				.then(() => {})
+				.then(() => {
+					setError("successfully added a new appetizer");
+				})
 				.catch(errors => {
 					setError(errors.response.data.message);
 				});
