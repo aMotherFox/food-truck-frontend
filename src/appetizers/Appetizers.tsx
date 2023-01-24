@@ -12,6 +12,7 @@ type CreatedAppetizer = {
 	price: number;
 };
 
+
 const Appetizers = () => {
 	const [error, setError] = useState<string>();
 	const [appetizers, setAppetizers] = useState<CreatedAppetizer[]>([]);
@@ -45,7 +46,7 @@ const Appetizers = () => {
 			.catch(errors => {
 				setError(errors.response.data.message);
 			});
-	}, [error]);
+	}, []);
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();

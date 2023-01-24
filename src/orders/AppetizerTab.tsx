@@ -8,9 +8,9 @@ import {
 	SimpleGrid,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import  { getAllAppetizers } from "../appetizers/AppetizerApis";
+import { getAllAppetizers } from "../appetizers/AppetizerApis";
 
-const AppetizerTab = () => {
+const AppetizerTab = (props: any ) => {
 	// story todos MACRO
 	// display appetizers in cards
 	// display entrees in cards
@@ -27,30 +27,33 @@ const AppetizerTab = () => {
 	// when this is successful
 	// the user is pushed to a confirmation page
 
-
+	// When the add to order button is clicked
+	// match the app clicked to an app with the same id
+	//
 	type Appetizer = {
 		id: number;
 		name: string;
 		price: number;
 	};
-	const [appetizers, setAppetizers] = useState<Appetizer[]>([])
+
+	const [appetizers, setAppetizers] = useState<Appetizer[]>([]);
 
 	useEffect(() => {
 		getAllAppetizers()
 			.then(response => {
 				console.log("yay with response", response);
-				setAppetizers(response.data)
+				setAppetizers(response.data);
 			})
 			.catch(errors => {
-				console.log("errors", errors)
+				console.log("errors", errors);
 			});
 	}, []);
 
+	// the state of what the order is has to live higher than the component to go between components
+
+
 	return (
-		<SimpleGrid
-			spacing={4}
-			columns={4}
-		>
+		<SimpleGrid spacing={4} columns={4}>
 			{appetizers.map(appetizer => (
 				<Card align="center" key={appetizer.id}>
 					<CardHeader>
@@ -60,7 +63,16 @@ const AppetizerTab = () => {
 						<h1>{appetizer.price}</h1>
 					</CardBody>
 					<CardFooter>
-						<Button>Add to order</Button>
+						<Button
+							onClick={() => {
+								console.log("appetizer clicked on: ", appetizer)
+								console.log("props", props)
+								console.log("props.handleAddNewAppetizer", props.newAppetizer)
+								props.newAppetizer(appetizer)
+							}}
+						>
+							Add to order
+						</Button>
 					</CardFooter>
 				</Card>
 			))}
