@@ -47,10 +47,6 @@ const Appetizers = () => {
 			});
 	}, []);
 
-	useEffect(() => {
-		console.log("New Appetizer:", appetizers);
-	}, [appetizers]);
-
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
@@ -65,6 +61,14 @@ const Appetizers = () => {
 					price,
 				})
 				.then(() => {
+					axios
+						.get("http://localhost:8080/appetizers")
+						.then(response => {
+							setAppetizers(response.data);
+						})
+						.catch(errors => {
+							setError(errors.response.data.message);
+						});
 					setError("successfully added a new appetizer");
 				})
 				.catch(errors => {
@@ -112,9 +116,9 @@ const Appetizers = () => {
 			</form>
 			<div>
 				{appetizers.map(appetizer => (
-					<div key={appetizer.id}>
-						<h1>{appetizer.name}</h1>
-						<h2>{appetizer.price}</h2>
+					<div className="product-box" key={appetizer.id}>
+						<h1 className="product-name">{appetizer.name}</h1>
+						<h2 className="product-price">{appetizer.price}</h2>
 					</div>
 				))}
 			</div>
