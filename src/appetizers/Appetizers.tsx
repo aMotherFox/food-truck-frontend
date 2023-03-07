@@ -3,6 +3,7 @@ import axios from "axios";
 
 type Appetizer = {
 	name: { value: string };
+	description: { value: string };
 	price: { value: number };
 } & EventTarget;
 
@@ -10,6 +11,7 @@ type CreatedAppetizer = {
 	id: number;
 	name: string;
 	price: number;
+	description: string;
 };
 
 const Appetizers = () => {
@@ -20,6 +22,7 @@ const Appetizers = () => {
 		const target = e.target as Appetizer;
 		const nameInput = target.name.value;
 		const priceInput = target.price.value;
+		const description = target.description.value;
 
 		if (nameInput === "" || priceInput === 0) {
 			setError("some fields are incomplete");
@@ -29,6 +32,8 @@ const Appetizers = () => {
 			setError("Appetizer name cannot be over 50 characters");
 		} else if (nameInput.length < 2) {
 			setError("Appetizer name cannot be under 2 characters");
+		} else if (description.length > 160) {
+			setError("description must be less than 160 characters");
 		} else {
 			return true;
 		}
@@ -45,7 +50,7 @@ const Appetizers = () => {
 			.catch(errors => {
 				setError(errors.response.data.message);
 			});
-	}, [error]);
+	}, []);
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -53,11 +58,13 @@ const Appetizers = () => {
 		const target = e.target as Appetizer;
 		const name = target.name.value;
 		const price = target.price.value;
+		const description = target.description.value;
 
 		if (isValid(e)) {
 			axios
 				.post<Appetizer>("http://localhost:8080/appetizers", {
 					name,
+					description,
 					price,
 				})
 				.then(() => {})
@@ -86,6 +93,18 @@ const Appetizers = () => {
 							</label>
 						</div>
 						<div>
+							<label htmlFor="entree_description">
+								Entree Description:
+								<input
+									className="form_input"
+									name="description"
+									type="text"
+									placeholder="'The tastiest fried Chicken'"
+									required
+								/>
+							</label>
+						</div>
+						<div>
 							<label htmlFor="appetizer_price">
 								Appetizer Price:
 								<input
@@ -108,6 +127,7 @@ const Appetizers = () => {
 				{appetizers.map(appetizer => (
 					<div key={appetizer.id}>
 						<h1>{appetizer.name}</h1>
+						<h1>{appetizer.description}</h1>
 						<h2>{appetizer.price}</h2>
 					</div>
 				))}
